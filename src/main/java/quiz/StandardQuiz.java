@@ -4,14 +4,15 @@ import question.Question;
 import user.User;
 
 import java.util.List;
+import java.util.SortedMap;
 
 public class StandardQuiz extends Quiz{
-    public StandardQuiz(long id, List<Question> questions, boolean correctImmediately, User author, String name) {
-        super(id, questions, correctImmediately, author, name);
+    public StandardQuiz(long id, List<Question> questions, User author, String name, SortedMap<Integer, User> history) {
+        super(id, questions, author, name, history);
     }
 
-    public StandardQuiz(List<Question> questions, boolean correctImmediately, User author, String name) {
-        super(questions, correctImmediately, author, name);
+    public StandardQuiz(List<Question> questions, User author, String name) {
+        super(questions, author, name);
     }
 
     @Override
