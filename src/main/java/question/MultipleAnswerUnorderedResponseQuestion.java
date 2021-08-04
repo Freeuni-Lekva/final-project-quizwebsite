@@ -8,7 +8,7 @@ import java.util.Iterator;
 public class MultipleAnswerUnorderedResponseQuestion extends UnorderedResponseQuestion {
     private final int numOfRequestedAnswers;
 
-    protected MultipleAnswerUnorderedResponseQuestion(String questionText, HashSet<String> legalAnswers, int numOfRequestedAnswers) {
+    public MultipleAnswerUnorderedResponseQuestion(String questionText, HashSet<String> legalAnswers, int numOfRequestedAnswers) {
         super(questionText, legalAnswers);
         this.numOfRequestedAnswers = numOfRequestedAnswers;
     }
@@ -21,5 +21,9 @@ public class MultipleAnswerUnorderedResponseQuestion extends UnorderedResponseQu
             if (legalAnswers.contains(iterator.next())) score++;
         }
         return (double) score / numOfRequestedAnswers;
+    }
+
+    public int getNumOfRequestedAnswers(){
+        return numOfRequestedAnswers;
     }
 }

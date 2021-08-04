@@ -97,6 +97,7 @@ create table multiple_answer_unordered_questions (
 	id int primary key auto_increment,
     question_text varchar(800),
     quiz_id int not null,
+    numOfRequestedAnswers int not null,
     foreign key(quiz_id) references quizzes(id) on delete cascade
 );
 
