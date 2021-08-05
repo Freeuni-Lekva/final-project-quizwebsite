@@ -6,7 +6,9 @@ create table users (
 	id int primary key auto_increment,
     username varchar(50),
     hashed_password varchar(200),
-    is_admin boolean
+    is_admin boolean,
+    first_name varchar(30),
+    last_name varchar(30)
 );
 
 create table messages(
