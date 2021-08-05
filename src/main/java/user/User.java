@@ -1,22 +1,28 @@
 package user;
 
-public class User {
+import quiz.Quiz;
 
+import java.time.LocalDate;
+import java.util.SortedMap;
+
+public class User {
     private String username;
     private String password;
     private int id;
+    private boolean isAdmin;
     private String firstName;
     private String lastName;
-    private boolean isAdmin;
 
-    public User(String username, String password, int id, String firstName, String lastName, boolean isAdmin){
+    public User(String username, String password, int id, boolean isAdmin, String firstName,
+                String lastName) {
         this.username = username;
+        this.password = password;
         this.id = id;
+        this.isAdmin = isAdmin;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.password = password;
-        this.isAdmin = isAdmin;
     }
+
 
     public String getUsername() {
         return username;
@@ -30,12 +36,23 @@ public class User {
         return id;
     }
 
-    public String getFullName() {
-        return firstName + " " + lastName;
-    }
-
     public boolean isAdmin() {
         return isAdmin;
     }
 
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", id=" + id +
+                ", isAdmin=" + isAdmin +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                '}';
+    }
 }

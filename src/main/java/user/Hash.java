@@ -23,15 +23,11 @@ public class Hash {
         return buff.toString();
     }
 
-    public String getHash() {
-        String hashedPassword = "";
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA");
-            md.update(password.getBytes(StandardCharsets.UTF_8));
-            hashedPassword = hexToString(md.digest());
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return hashedPassword;
+    public String hashPassword() throws NoSuchAlgorithmException {
+        String ans = "";
+        MessageDigest md = MessageDigest.getInstance("SHA");
+        md.update(password.getBytes(StandardCharsets.UTF_8));
+        ans = hexToString(md.digest());
+        return ans;
     }
 }

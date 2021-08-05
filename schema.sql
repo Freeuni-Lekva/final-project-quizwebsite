@@ -38,7 +38,6 @@ create table quizzes(
 	id int primary key auto_increment,
     author int not null,
     quiz_name varchar(200) not null,
-    correct_immediately boolean,
     foreign key(author) references users(id) on delete cascade
 );
 
@@ -113,8 +112,8 @@ create table multiple_answer_unordered_answers (
 -- examples --
 /*
 insert into users(username, hashed_password, is_admin) values("test1", "pass", 1);
-insert into quizzes(author, quiz_name, correct_immediately) values (1, "Quiz1", false);
-insert into quizzes(author, quiz_name, correct_immediately) values (1, "Quiz2", true);
+insert into quizzes(author, quiz_name) values (1, "Quiz1");
+insert into quizzes(author, quiz_name) values (1, "Quiz2");
 
 insert into standard_unordered_questions(question_text, quiz_id) values ("What is the highest mountain", 1);
 insert into standard_unordered_questions(question_text, quiz_id) values ("What is the deepest lake", 1);
