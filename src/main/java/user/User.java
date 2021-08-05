@@ -23,6 +23,15 @@ public class User {
         this.lastName = lastName;
     }
 
+    public User(String username, String password, boolean isAdmin, String firstName,
+                String lastName) {
+        this.username = username;
+        this.password = password;
+        this.isAdmin = isAdmin;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
 
     public String getUsername() {
         return username;
@@ -41,7 +50,15 @@ public class User {
     }
 
     public String getFullName() {
-        return firstName + " " + lastName;
+        return getFirstName() + " " + getLastName();
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 
     @Override

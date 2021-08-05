@@ -18,6 +18,13 @@ public class UserAttempt {
         this.date = date;
     }
 
+    public UserAttempt(int quizId, int userId, int score, Date date) {
+        this.quizId = quizId;
+        this.userId = userId;
+        this.score = score;
+        this.date = date;
+    }
+
     public int getId() {
         return id;
     }

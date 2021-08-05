@@ -3,9 +3,9 @@ create database quizwebsite_db;
 use quizwebsite_db;
 
 create table users (
-	id int primary key auto_increment,
-    username varchar(50),
-    hashed_password varchar(200),
+	id int primary key auto_increment unique,
+    username varchar(50) not null unique,
+    hashed_password varchar(200) not null,
     is_admin boolean,
     first_name varchar(30),
     last_name varchar(30)
