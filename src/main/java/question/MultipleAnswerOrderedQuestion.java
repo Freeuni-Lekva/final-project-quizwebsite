@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class MultipleAnswerOrderedQuestion extends OrderedResponseQuestion {
+
     public MultipleAnswerOrderedQuestion(String questionText, ArrayList<String> orderOfAnswers) {
         super(questionText, orderOfAnswers);
     }

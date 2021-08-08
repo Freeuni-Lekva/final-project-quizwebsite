@@ -19,4 +19,8 @@ public abstract class UnorderedResponseQuestion implements Question{
 
     public abstract double getScore(Response response);
 
+    public HashSet<String> getLegalAnswers(){
+        return  legalAnswers;
+    }
+
 }

@@ -19,14 +19,29 @@ public class MultipleAnswerUnorderedResponseQuestionDao implements QuestionDao{
     }
 
     @Override
-    public void addQuestion(Question question) {
+    public void addQuestion(Question question, int quiz_id) {
         MultipleAnswerUnorderedResponseQuestion q = (MultipleAnswerUnorderedResponseQuestion)question;
         try {
             PreparedStatement statement = conn.prepareStatement
                     ("INSERT  INTO multiple_answer_unordered_questions (question_text, quiz_id, numOfRequestedAnswers)" +
-                            "VALUES (?, 1, ?);");
+                            "VALUES (?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, q.getQuestionText());
-            statement.setInt(2, q.getNumOfRequestedAnswers());
+            statement.setInt(2, quiz_id);
+            statement.setInt(3, q.getNumOfRequestedAnswers());
+            statement.execute();
+
+            ResultSet rs = statement.getGeneratedKeys();
+            rs.next();
+            int question_id =rs.getInt(1);
+
+            HashSet<String> answers = q.getLegalAnswers();
+            for(String s : answers){
+                PreparedStatement statement1 = conn.prepareStatement
+                        ("Insert into  multiple_answer_unordered_answers(answer_text, question_id) values (?, ?);");
+                statement1.setString(1, s);
+                statement1.setInt(2, question_id);
+                statement1.execute();
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -34,17 +49,18 @@ public class MultipleAnswerUnorderedResponseQuestionDao implements QuestionDao{
     }
 
     @Override
-    public List<Question> getQuestions(Quiz quiz) {
+    public List<Question> getQuestions(int quizId) {
         List<Question> result = new ArrayList<>();
 
         try {
             PreparedStatement st = conn.prepareStatement("select * from multiple_answer_unordered_questions WHERE  quiz_id = ?;" );
-            st.setInt(1, (int)quiz.getId());
+            st.setInt(1, quizId);
             ResultSet res = st.executeQuery();
 
             while(res.next()){
                     String text = res.getString("question_text");
                     int question_id = res.getInt("id");
+                    int quiz_id = res.getInt("quiz_id");
                     HashSet<String> legalAnswers = getLegalAnswers(question_id);
                     int numOfRequestedAnswers = res.getInt("numOfRequestedAnswers");
                     Question q = new MultipleAnswerUnorderedResponseQuestion(text, legalAnswers, numOfRequestedAnswers);
