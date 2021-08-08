@@ -67,7 +67,8 @@ class MultipleAnswerUnorderedResponseQuestionDaoTest {
         assertEquals(q1.getLegalAnswers(), answers);
         assertEquals(q1.getNumOfRequestedAnswers(), res.getInt("numOfRequestedAnswers"));
 
-        PreparedStatement stat = conn.prepareStatement("delete from multiple_answer_unordered_questions;");
+        PreparedStatement stat = conn.prepareStatement("delete from multiple_answer_unordered_questions where question_text=?;");
+        stat.setString(1, q1.getQuestionText());
         stat.execute();
     }
 
@@ -91,7 +92,9 @@ class MultipleAnswerUnorderedResponseQuestionDaoTest {
         assertEquals(p1.getNumOfRequestedAnswers(), q2.getNumOfRequestedAnswers());
 
 
-        PreparedStatement stat = conn.prepareStatement("delete from multiple_answer_unordered_questions;");
+        PreparedStatement stat = conn.prepareStatement("delete from multiple_answer_unordered_questions where question_text In (?, ?);");
+        stat.setString(1, q1.getQuestionText());
+        stat.setString(2, q2.getQuestionText());
         stat.execute();
     }
 }

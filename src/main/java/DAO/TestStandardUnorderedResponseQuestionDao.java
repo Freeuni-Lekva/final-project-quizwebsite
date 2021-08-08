@@ -66,7 +66,8 @@ public class TestStandardUnorderedResponseQuestionDao {
             answers.add(r.getString("answer_text"));
         }
         assertEquals(q1.getLegalAnswers(), answers);
-        PreparedStatement stat = conn.prepareStatement("delete from standard_unordered_questions;");
+        PreparedStatement stat = conn.prepareStatement("delete from standard_unordered_questions where question_text =?;");
+        stat.setString(1, q1.getQuestionText());
         stat.execute();
     }
 
@@ -74,7 +75,7 @@ public class TestStandardUnorderedResponseQuestionDao {
     public void testGetQuestion() throws SQLException {
         qDao.addQuestion(q1, 5);
         qDao.addQuestion(q2, 5);
-        
+
         List<Question>  qs =  qDao.getQuestions(5);
         assertEquals(qs.get(0).getQuestionText(), q1.getQuestionText());
         assertEquals(qs.get(1).getQuestionText(), q2.getQuestionText());
@@ -87,9 +88,9 @@ public class TestStandardUnorderedResponseQuestionDao {
         HashSet<String> r1 = p1.getLegalAnswers();
         assertEquals(r1, q2.getLegalAnswers());
 
-        PreparedStatement stat = conn.prepareStatement("delete from standard_unordered_questions;");
+        PreparedStatement stat = conn.prepareStatement("delete from standard_unordered_questions where question_text in (?, ?);");
+        stat.setString(1, q1.getQuestionText());
+        stat.setString(2, q2.getQuestionText());
         stat.execute();
     }
-
-
 }

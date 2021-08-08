@@ -77,7 +77,9 @@ class MultipleChoiceUnorderedResponseQuestionDaoTest {
         }
         assertEquals(q1.getChoices(), answers);
 
-        PreparedStatement stat = conn.prepareStatement("delete from multiple_choice_unordered_questions;");
+        PreparedStatement stat = conn.prepareStatement
+                ("delete from multiple_choice_unordered_questions where question_text =?;");
+        stat.setString(1, q1.getQuestionText());
         stat.execute();
     }
 
@@ -98,7 +100,10 @@ class MultipleChoiceUnorderedResponseQuestionDaoTest {
         HashSet<String> r1 = p1.getLegalAnswers();
         assertEquals(r1, q2.getLegalAnswers());
 
-        PreparedStatement stat = conn.prepareStatement("delete from multiple_choice_unordered_questions;");
+        PreparedStatement stat = conn.prepareStatement
+                ("delete from multiple_choice_unordered_questions where question_text In (?, ?);");
+        stat.setString(1, q1.getQuestionText());
+        stat.setString(2, q2.getQuestionText());
         stat.execute();
     }
 }
