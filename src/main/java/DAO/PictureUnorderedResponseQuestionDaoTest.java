@@ -42,11 +42,14 @@ class PictureUnorderedResponseQuestionDaoTest {
 
         q2 = new PictureUnorderedResponseQuestion(questionText2, legalAnswers2, picUrl2);
 
+        q1.setQuizId(1);
+        q2.setQuizId(1);
+
     }
 
     @Test
     public void testAddQuestion() throws SQLException {
-        qDao.addQuestion(q1, 1);
+        qDao.addQuestion(q1);
         PreparedStatement st = conn.prepareStatement("select * from picture_unordered_questions;", ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_UPDATABLE);
         ResultSet res = st.executeQuery();
@@ -72,10 +75,10 @@ class PictureUnorderedResponseQuestionDaoTest {
 
     @Test
     public void testGetQuestion() throws SQLException {
-        qDao.addQuestion(q1, 6);
-        qDao.addQuestion(q2, 6);
+        qDao.addQuestion(q1);
+        qDao.addQuestion(q2);
 
-        List<Question>  qs =  qDao.getQuestions(6);
+        List<Question>  qs =  qDao.getQuestions(1);
         assertEquals(qs.get(0).getQuestionText(), q1.getQuestionText());
         PictureUnorderedResponseQuestion p = (PictureUnorderedResponseQuestion)qs.get(0);
         HashSet<String> r = p.getLegalAnswers();

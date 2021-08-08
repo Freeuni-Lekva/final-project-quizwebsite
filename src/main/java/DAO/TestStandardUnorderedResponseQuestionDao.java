@@ -42,12 +42,14 @@ public class TestStandardUnorderedResponseQuestionDao {
         legalAnswers2.add("philippine Sea");
 
         q2 = new StandardUnorderedResponseQuestion(questionText2, legalAnswers2);
+        q1.setQuizId(1);
+        q2.setQuizId(1);
 
     }
 
     @Test
     public void testAddQuestion() throws SQLException {
-        qDao.addQuestion(q1, 5);
+        qDao.addQuestion(q1);
         PreparedStatement st = conn.prepareStatement("select * from standard_unordered_questions;",ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_UPDATABLE);
         ResultSet res = st.executeQuery();
@@ -73,10 +75,10 @@ public class TestStandardUnorderedResponseQuestionDao {
 
     @Test
     public void testGetQuestion() throws SQLException {
-        qDao.addQuestion(q1, 5);
-        qDao.addQuestion(q2, 5);
+        qDao.addQuestion(q1);
+        qDao.addQuestion(q2);
 
-        List<Question>  qs =  qDao.getQuestions(5);
+        List<Question>  qs =  qDao.getQuestions(1);
         assertEquals(qs.get(0).getQuestionText(), q1.getQuestionText());
         assertEquals(qs.get(1).getQuestionText(), q2.getQuestionText());
 

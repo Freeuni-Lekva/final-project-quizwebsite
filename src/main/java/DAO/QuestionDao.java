@@ -6,6 +6,6 @@ import quiz.Quiz;
 import java.util.List;
 
 public interface QuestionDao {
-    void addQuestion(Question question, int quiz_id);
+    void addQuestion(Question question);
     List<Question> getQuestions(int quizId);
 }

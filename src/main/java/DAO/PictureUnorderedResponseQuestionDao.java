@@ -19,7 +19,7 @@ public class PictureUnorderedResponseQuestionDao implements QuestionDao{
     }
 
     @Override
-    public void addQuestion(Question question, int quiz_id) {
+    public void addQuestion(Question question) {
         PictureUnorderedResponseQuestion q = (PictureUnorderedResponseQuestion)question;
         try {
 
@@ -28,7 +28,7 @@ public class PictureUnorderedResponseQuestionDao implements QuestionDao{
                             "VALUES (?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, q.getQuestionText());
             statement.setString(2, q.getPicUrl());
-            statement.setInt(3, quiz_id);
+            statement.setInt(3, q.getQuizId());
             statement.execute();
 
             ResultSet rs = statement.getGeneratedKeys();

@@ -19,14 +19,14 @@ public class MultipleAnswerUnorderedResponseQuestionDao implements QuestionDao{
     }
 
     @Override
-    public void addQuestion(Question question, int quiz_id) {
+    public void addQuestion(Question question) {
         MultipleAnswerUnorderedResponseQuestion q = (MultipleAnswerUnorderedResponseQuestion)question;
         try {
             PreparedStatement statement = conn.prepareStatement
                     ("INSERT  INTO multiple_answer_unordered_questions (question_text, quiz_id, numOfRequestedAnswers)" +
                             "VALUES (?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, q.getQuestionText());
-            statement.setInt(2, quiz_id);
+            statement.setInt(2, q.getQuizId());
             statement.setInt(3, q.getNumOfRequestedAnswers());
             statement.execute();
 

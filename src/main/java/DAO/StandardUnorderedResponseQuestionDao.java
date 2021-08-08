@@ -18,14 +18,14 @@ public class StandardUnorderedResponseQuestionDao implements QuestionDao{
     }
 
     @Override
-    public void addQuestion(Question question, int quiz_id) {
+    public void addQuestion(Question question) {
         StandardUnorderedResponseQuestion q = (StandardUnorderedResponseQuestion)question;
         try {
             PreparedStatement statement = conn.prepareStatement
                     ("INSERT  INTO standard_unordered_questions(question_text, quiz_id) VALUES (?, ?);",
                             Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, q.getQuestionText());
-            statement.setInt(2, quiz_id);
+            statement.setInt(2, q.getQuizId());
             statement.execute();
 
             ResultSet rs = statement.getGeneratedKeys();
