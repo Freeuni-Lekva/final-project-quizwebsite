@@ -60,10 +60,10 @@ public class MultipleAnswerUnorderedResponseQuestionDao implements QuestionDao{
             while(res.next()){
                     String text = res.getString("question_text");
                     int question_id = res.getInt("id");
-                    int quiz_id = res.getInt("quiz_id");
                     HashSet<String> legalAnswers = getLegalAnswers(question_id);
                     int numOfRequestedAnswers = res.getInt("numOfRequestedAnswers");
                     Question q = new MultipleAnswerUnorderedResponseQuestion(text, legalAnswers, numOfRequestedAnswers);
+                    q.setQuizId(quizId);
                     result.add(q);
             }
         } catch (SQLException e) {
