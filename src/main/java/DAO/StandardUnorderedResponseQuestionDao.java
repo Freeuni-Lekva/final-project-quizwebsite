@@ -59,8 +59,8 @@ public class StandardUnorderedResponseQuestionDao implements QuestionDao{
                 String text = res.getString("question_text");
                 int question_id = res.getInt("id");
                 HashSet<String> legalAnswers = getLegalAnswers(question_id);
-                int quiz_id = res.getInt("quiz_id");
                 Question q = new StandardUnorderedResponseQuestion(text, legalAnswers);
+                q.setQuizId(quizId);
                 result.add(q);
             }
         } catch (SQLException e) {
