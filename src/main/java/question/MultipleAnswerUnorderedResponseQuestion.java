@@ -22,4 +22,8 @@ public class MultipleAnswerUnorderedResponseQuestion extends UnorderedResponseQu
         }
         return (double) score / numOfRequestedAnswers;
     }
+
+    public int getNumOfRequestedAnswers(){
+        return numOfRequestedAnswers;
+    }
 }

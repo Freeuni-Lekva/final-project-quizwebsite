@@ -10,8 +10,9 @@ public class MultipleChoiceUnorderedResponseQuestion extends UnorderedResponseQu
 
     public MultipleChoiceUnorderedResponseQuestion(String questionText, HashSet<String> legalAnswers, HashSet<String> choices) {
         super(questionText, legalAnswers);
-        if (!isLegalAnswersValid()) throw new RuntimeException("legalAnswers isn't valid");
         this.choices = choices;
+        if (!isLegalAnswersValid()) throw new RuntimeException("legalAnswers isn't valid");
+
     }
 
     @Override
@@ -45,4 +46,7 @@ public class MultipleChoiceUnorderedResponseQuestion extends UnorderedResponseQu
         }
         return true;
     }
+
+
 }
+
