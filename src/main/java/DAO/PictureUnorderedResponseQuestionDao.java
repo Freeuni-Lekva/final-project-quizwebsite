@@ -62,8 +62,8 @@ public class PictureUnorderedResponseQuestionDao implements QuestionDao{
                 int question_id = res.getInt("id");
                 HashSet<String> legalAnswers = getLegalAnswers(question_id);
                 String img_url = res.getString("img_url");
-                int quiz_id=res.getInt("quiz_id");
                 Question q = new PictureUnorderedResponseQuestion(text, legalAnswers, img_url);
+                q.setQuizId(quizId);
                 result.add(q);
             }
         } catch (SQLException e) {
