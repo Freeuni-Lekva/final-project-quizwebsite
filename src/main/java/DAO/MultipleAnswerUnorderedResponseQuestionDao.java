@@ -1,17 +1,14 @@
 package DAO;
 
-import com.mysql.cj.protocol.Resultset;
-import question.MultipleAnswerOrderedQuestion;
 import question.MultipleAnswerUnorderedResponseQuestion;
 import question.Question;
-import quiz.Quiz;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-public class MultipleAnswerUnorderedResponseQuestionDao extends QuestionDaoAbstract{
+public class MultipleAnswerUnorderedResponseQuestionDao implements QuestionDao {
     private final Connection conn;
 
     public MultipleAnswerUnorderedResponseQuestionDao(Connection conn){
@@ -57,7 +54,26 @@ public class MultipleAnswerUnorderedResponseQuestionDao extends QuestionDaoAbstr
 
         return result;
     }
+    private void insertAnswers(String st, Connection conn, int question_id, HashSet<String> answers) throws SQLException {
+        for(String s : answers){
+            PreparedStatement statement1 = conn.prepareStatement(st);
+            statement1.setString(1, s);
+            statement1.setInt(2, question_id);
+            statement1.execute();
+        }
+    }
 
+
+    private HashSet<String> getAnswers(int question_id, String s, Connection conn) throws SQLException {
+        HashSet<String> result = new HashSet<>();
+        PreparedStatement st = conn.prepareStatement(s);
+        st.setInt(1, question_id);
+        ResultSet res = st.executeQuery();
+        while(res.next()){
+            result.add(res.getString("answer_text"));
+        }
+        return result;
+    }
 
 
 }

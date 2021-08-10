@@ -1,18 +1,16 @@
 package DAO;
 
-import question.MultipleAnswerUnorderedResponseQuestion;
 import question.PictureUnorderedResponseQuestion;
 import question.Question;
-import quiz.Quiz;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-public class PictureUnorderedResponseQuestionDao extends QuestionDaoAbstract{
+public class PictureUnorderedResponseQuestionDao implements QuestionDao {
 
-    Connection conn;
+    private final Connection conn;
 
     public PictureUnorderedResponseQuestionDao(Connection conn){
         this.conn=conn;
@@ -63,6 +61,25 @@ public class PictureUnorderedResponseQuestionDao extends QuestionDaoAbstract{
         return result;
     }
 
+    private void insertAnswers(String st, Connection conn, int question_id, HashSet<String> answers) throws SQLException {
+        for(String s : answers){
+            PreparedStatement statement1 = conn.prepareStatement(st);
+            statement1.setString(1, s);
+            statement1.setInt(2, question_id);
+            statement1.execute();
+        }
+    }
 
+
+    private HashSet<String> getAnswers(int question_id, String s, Connection conn) throws SQLException {
+        HashSet<String> result = new HashSet<>();
+        PreparedStatement st = conn.prepareStatement(s);
+        st.setInt(1, question_id);
+        ResultSet res = st.executeQuery();
+        while(res.next()){
+            result.add(res.getString("answer_text"));
+        }
+        return result;
+    }
 
 }
