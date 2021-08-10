@@ -11,17 +11,16 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-public class MultipleAnswerUnorderedResponseQuestionDao implements QuestionDao{
-    Connection conn;
+public class MultipleAnswerUnorderedResponseQuestionDao extends QuestionDaoAbstract{
+    private final Connection conn;
 
     public MultipleAnswerUnorderedResponseQuestionDao(Connection conn){
         this.conn=conn;
     }
 
     @Override
-    public void addQuestion(Question question) {
+    public void addQuestion(Question question) throws SQLException {
         MultipleAnswerUnorderedResponseQuestion q = (MultipleAnswerUnorderedResponseQuestion)question;
-        try {
             PreparedStatement statement = conn.prepareStatement
                     ("INSERT  INTO multiple_answer_unordered_questions (question_text, quiz_id, numOfRequestedAnswers)" +
                             "VALUES (?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
@@ -32,59 +31,33 @@ public class MultipleAnswerUnorderedResponseQuestionDao implements QuestionDao{
 
             ResultSet rs = statement.getGeneratedKeys();
             rs.next();
+
             int question_id =rs.getInt(1);
-
+            String st = "Insert into  multiple_answer_unordered_answers(answer_text, question_id) values (?, ?);";
             HashSet<String> answers = q.getLegalAnswers();
-            for(String s : answers){
-                PreparedStatement statement1 = conn.prepareStatement
-                        ("Insert into  multiple_answer_unordered_answers(answer_text, question_id) values (?, ?);");
-                statement1.setString(1, s);
-                statement1.setInt(2, question_id);
-                statement1.execute();
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+            insertAnswers(st, conn, question_id, answers);
     }
 
     @Override
-    public List<Question> getQuestions(int quizId) {
+    public List<Question> getQuestions(int quizId) throws SQLException {
         List<Question> result = new ArrayList<>();
-
-        try {
-            PreparedStatement st = conn.prepareStatement("select * from multiple_answer_unordered_questions WHERE  quiz_id = ?;" );
-            st.setInt(1, quizId);
-            ResultSet res = st.executeQuery();
-
-            while(res.next()){
-                    String text = res.getString("question_text");
-                    int question_id = res.getInt("id");
-                    HashSet<String> legalAnswers = getLegalAnswers(question_id);
-                    int numOfRequestedAnswers = res.getInt("numOfRequestedAnswers");
-                    Question q = new MultipleAnswerUnorderedResponseQuestion(text, legalAnswers, numOfRequestedAnswers);
-                    q.setQuizId(quizId);
-                    result.add(q);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        PreparedStatement st = conn.prepareStatement("select * from multiple_answer_unordered_questions WHERE  quiz_id = ?;" );
+        st.setInt(1, quizId);
+        ResultSet res = st.executeQuery();
+        while(res.next()){
+            String text = res.getString("question_text");
+            int question_id = res.getInt("id");
+            String s = "select * from multiple_answer_unordered_answers WHERE question_id = ?;";
+            HashSet<String> legalAnswers = getAnswers(question_id,  s, conn);
+            int numOfRequestedAnswers = res.getInt("numOfRequestedAnswers");
+            MultipleAnswerUnorderedResponseQuestion q = new MultipleAnswerUnorderedResponseQuestion(text, legalAnswers, numOfRequestedAnswers);
+            q.setQuizId(quizId);
+            result.add(q);
         }
+
         return result;
     }
 
-    private HashSet<String> getLegalAnswers(int question_id) {
-        HashSet<String> result = new HashSet<>();
-        try {
-            PreparedStatement st = conn.prepareStatement("select * from multiple_answer_unordered_answers WHERE question_id = ?;" );
-            st.setInt(1, question_id);
-            ResultSet res = st.executeQuery();
-            while(res.next()){
-                    result.add(res.getString("answer_text"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
+
 
 }

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-public class PictureUnorderedResponseQuestionDao implements QuestionDao{
+public class PictureUnorderedResponseQuestionDao extends QuestionDaoAbstract{
 
     Connection conn;
 
@@ -19,10 +19,8 @@ public class PictureUnorderedResponseQuestionDao implements QuestionDao{
     }
 
     @Override
-    public void addQuestion(Question question) {
-        PictureUnorderedResponseQuestion q = (PictureUnorderedResponseQuestion)question;
-        try {
-
+    public void addQuestion(Question question) throws SQLException {
+            PictureUnorderedResponseQuestion q = (PictureUnorderedResponseQuestion)question;
             PreparedStatement statement = conn.prepareStatement
                     ("INSERT  INTO picture_unordered_questions(question_text, img_url, quiz_id)" +
                             "VALUES (?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
@@ -36,16 +34,8 @@ public class PictureUnorderedResponseQuestionDao implements QuestionDao{
             int question_id =rs.getInt(1);
 
             HashSet<String> answers = q.getLegalAnswers();
-            for(String s : answers){
-                PreparedStatement statement1 = conn.prepareStatement
-                        ("Insert into picture_unordered_answers(answer_text, question_id) values (?, ?);");
-                statement1.setString(1, s);
-                statement1.setInt(2, question_id);
-                statement1.execute();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+            String st ="Insert into picture_unordered_answers(answer_text, question_id) values (?, ?);";
+            insertAnswers(st, conn, question_id, answers);
     }
 
     @Override
@@ -60,9 +50,10 @@ public class PictureUnorderedResponseQuestionDao implements QuestionDao{
             while(res.next()){
                 String text = res.getString("question_text");
                 int question_id = res.getInt("id");
-                HashSet<String> legalAnswers = getLegalAnswers(question_id);
+                String s = "select * from picture_unordered_answers WHERE question_id = ?;";
+                HashSet<String> legalAnswers = getAnswers(question_id, s, conn);
                 String img_url = res.getString("img_url");
-                Question q = new PictureUnorderedResponseQuestion(text, legalAnswers, img_url);
+                PictureUnorderedResponseQuestion q = new PictureUnorderedResponseQuestion(text, legalAnswers, img_url);
                 q.setQuizId(quizId);
                 result.add(q);
             }
@@ -72,20 +63,6 @@ public class PictureUnorderedResponseQuestionDao implements QuestionDao{
         return result;
     }
 
-    private HashSet<String> getLegalAnswers(int question_id) {
-        HashSet<String> result = new HashSet<>();
-        try {
-            PreparedStatement st = conn.prepareStatement("select * from picture_unordered_answers WHERE question_id = ?;" );
-            st.setInt(1, question_id);
-            ResultSet res = st.executeQuery();
-            while(res.next()){
-                result.add(res.getString("answer_text"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
 
 
 }

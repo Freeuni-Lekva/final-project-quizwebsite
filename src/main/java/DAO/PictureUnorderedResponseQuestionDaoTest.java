@@ -53,7 +53,6 @@ class PictureUnorderedResponseQuestionDaoTest {
         PreparedStatement st = conn.prepareStatement("select * from picture_unordered_questions;", ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_UPDATABLE);
         ResultSet res = st.executeQuery();
-
         res.last();
         String text = res.getString("question_text");
         int question_id = res.getInt("id");
@@ -79,13 +78,14 @@ class PictureUnorderedResponseQuestionDaoTest {
         qDao.addQuestion(q2);
 
         List<Question>  qs =  qDao.getQuestions(1);
-        assertEquals(qs.get(0).getQuestionText(), q1.getQuestionText());
+
         PictureUnorderedResponseQuestion p = (PictureUnorderedResponseQuestion)qs.get(0);
+        assertEquals(p.getQuestionText(), q1.getQuestionText());
         HashSet<String> r = p.getLegalAnswers();
         assertEquals(r, q1.getLegalAnswers());
 
-        assertEquals(qs.get(1).getQuestionText(), q2.getQuestionText());
         PictureUnorderedResponseQuestion p1 = (PictureUnorderedResponseQuestion)qs.get(1);
+        assertEquals(p1.getQuestionText(), q1.getQuestionText());
         HashSet<String> r1 = p1.getLegalAnswers();
         assertEquals(r1, q2.getLegalAnswers());
 

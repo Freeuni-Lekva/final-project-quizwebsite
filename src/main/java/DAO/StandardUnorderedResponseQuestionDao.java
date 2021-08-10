@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-public class StandardUnorderedResponseQuestionDao implements QuestionDao{
+public class StandardUnorderedResponseQuestionDao extends QuestionDaoAbstract{
     Connection conn;
 
     public StandardUnorderedResponseQuestionDao(Connection conn){
@@ -18,9 +18,8 @@ public class StandardUnorderedResponseQuestionDao implements QuestionDao{
     }
 
     @Override
-    public void addQuestion(Question question) {
-        StandardUnorderedResponseQuestion q = (StandardUnorderedResponseQuestion)question;
-        try {
+    public void addQuestion(Question question) throws SQLException {
+            StandardUnorderedResponseQuestion q = (StandardUnorderedResponseQuestion)question;
             PreparedStatement statement = conn.prepareStatement
                     ("INSERT  INTO standard_unordered_questions(question_text, quiz_id) VALUES (?, ?);",
                             Statement.RETURN_GENERATED_KEYS);
@@ -31,19 +30,9 @@ public class StandardUnorderedResponseQuestionDao implements QuestionDao{
             ResultSet rs = statement.getGeneratedKeys();
             rs.next();
             int question_id =rs.getInt(1);
-
             HashSet<String> answers = q.getLegalAnswers();
-            for(String s : answers){
-                PreparedStatement st= conn.prepareStatement
-                        ("INSERT  INTO standard_unordered_answers(answer_text, question_id) VALUES (?, ?);");
-                st.setString(1, s);
-                st.setInt(2, question_id);
-                st.execute();
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+            String st = "INSERT  INTO standard_unordered_answers(answer_text, question_id) VALUES (?, ?);";
+            insertAnswers(st, conn, question_id, answers);
     }
 
     @Override
@@ -58,25 +47,11 @@ public class StandardUnorderedResponseQuestionDao implements QuestionDao{
             while(res.next()){
                 String text = res.getString("question_text");
                 int question_id = res.getInt("id");
-                HashSet<String> legalAnswers = getLegalAnswers(question_id);
-                Question q = new StandardUnorderedResponseQuestion(text, legalAnswers);
+                String s="select * from standard_unordered_answers  WHERE question_id = ?;";
+                HashSet<String> legalAnswers = getAnswers(question_id, s, conn);
+                StandardUnorderedResponseQuestion q = new StandardUnorderedResponseQuestion(text, legalAnswers);
                 q.setQuizId(quizId);
                 result.add(q);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
-
-    private HashSet<String> getLegalAnswers(int question_id) {
-        HashSet<String> result = new HashSet<>();
-        try {
-            PreparedStatement st = conn.prepareStatement("select * from standard_unordered_answers  WHERE question_id = ?;" );
-            st.setInt(1, question_id);
-            ResultSet res = st.executeQuery();
-            while(res.next()){
-                result.add(res.getString("answer_text"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
