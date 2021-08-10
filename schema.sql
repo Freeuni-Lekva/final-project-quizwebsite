@@ -45,7 +45,7 @@ create table quiz_history(
 	id int primary key auto_increment,
     quiz_id int not null,
     user_id int not null,
-    score int not null,
+    score double not null,
 	attempt_time timestamp not null,
     foreign key(quiz_id) references quizzes(id) on delete cascade,
     foreign key(user_id) references users(id) on delete cascade
