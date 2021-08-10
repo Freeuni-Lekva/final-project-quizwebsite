@@ -17,14 +17,14 @@ public class PictureUnorderedResponseQuestionDao implements QuestionDao {
     }
 
     @Override
-    public void addQuestion(Question question) throws SQLException {
+    public void addQuestion(Question question, long quiz_id) throws SQLException {
             PictureUnorderedResponseQuestion q = (PictureUnorderedResponseQuestion)question;
             PreparedStatement statement = conn.prepareStatement
                     ("INSERT  INTO picture_unordered_questions(question_text, img_url, quiz_id)" +
                             "VALUES (?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, q.getQuestionText());
             statement.setString(2, q.getPicUrl());
-            statement.setInt(3, q.getQuizId());
+            statement.setInt(3, (int)quiz_id);
             statement.execute();
 
             ResultSet rs = statement.getGeneratedKeys();
@@ -52,7 +52,6 @@ public class PictureUnorderedResponseQuestionDao implements QuestionDao {
                 HashSet<String> legalAnswers = getAnswers(question_id, s, conn);
                 String img_url = res.getString("img_url");
                 PictureUnorderedResponseQuestion q = new PictureUnorderedResponseQuestion(text, legalAnswers, img_url);
-                q.setQuizId(quizId);
                 result.add(q);
             }
         } catch (SQLException e) {

@@ -16,13 +16,13 @@ public class StandardUnorderedResponseQuestionDao implements QuestionDao {
     }
 
     @Override
-    public void addQuestion(Question question) throws SQLException {
+    public void addQuestion(Question question, long quiz_id) throws SQLException {
             StandardUnorderedResponseQuestion q = (StandardUnorderedResponseQuestion)question;
             PreparedStatement statement = conn.prepareStatement
                     ("INSERT  INTO standard_unordered_questions(question_text, quiz_id) VALUES (?, ?);",
                             Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, q.getQuestionText());
-            statement.setInt(2, q.getQuizId());
+            statement.setInt(2, (int)quiz_id);
             statement.execute();
 
             ResultSet rs = statement.getGeneratedKeys();
@@ -48,7 +48,6 @@ public class StandardUnorderedResponseQuestionDao implements QuestionDao {
                 String s="select * from standard_unordered_answers  WHERE question_id = ?;";
                 HashSet<String> legalAnswers = getAnswers(question_id, s, conn);
                 StandardUnorderedResponseQuestion q = new StandardUnorderedResponseQuestion(text, legalAnswers);
-                q.setQuizId(quizId);
                 result.add(q);
             }
         } catch (SQLException e) {

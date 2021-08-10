@@ -41,14 +41,12 @@ class MultipleAnswerUnorderedResponseQuestionDaoTest {
 
         q1 = new MultipleAnswerUnorderedResponseQuestion(questionText, legalAnswers, numOfRequestedAnswers);
         q2 = new MultipleAnswerUnorderedResponseQuestion(questionText2, legalAnswers2, numOfRequestedAnswers2);
-        q1.setQuizId(1);
-        q2.setQuizId(1);
         qDao = new MultipleAnswerUnorderedResponseQuestionDao(conn);
     }
 
     @Test
     public void testAddQuestion() throws SQLException {
-        qDao.addQuestion(q1);
+        qDao.addQuestion(q1, 1) ;
 
         PreparedStatement st = conn.prepareStatement("select * from multiple_answer_unordered_questions;", ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_UPDATABLE);
@@ -77,8 +75,8 @@ class MultipleAnswerUnorderedResponseQuestionDaoTest {
 
     @Test
     public void testGetQuestion() throws SQLException {
-        qDao.addQuestion(q1);
-        qDao.addQuestion(q2);
+        qDao.addQuestion(q1,  1);
+        qDao.addQuestion(q2, 1);
 
         List<Question> qs =  qDao.getQuestions(1);
         assertEquals(qs.get(0).getQuestionText(), q1.getQuestionText());
