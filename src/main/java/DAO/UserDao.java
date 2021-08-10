@@ -103,6 +103,33 @@ public class UserDao {
         return ans;
     }
 
+    public double getMaxScore(User user) {
+        List<UserAttempt> history = this.getHistory(user);
+        double maxScore = 0;
+        for (UserAttempt ua : history) {
+            if (ua.getScore() > maxScore) maxScore = ua.getScore();
+        }
+        return maxScore;
+    }
+
+    public double getMinScore(User user) {
+        List<UserAttempt> history = this.getHistory(user);
+        double minScore = Double.MAX_VALUE;
+        for (UserAttempt ua : history) {
+            if (ua.getScore() < minScore) minScore = ua.getScore();
+        }
+        return minScore;
+    }
+
+    public double getAverageScore(User user) {
+        List<UserAttempt> history = this.getHistory(user);
+        double total = 0;
+        for (UserAttempt ua : history) {
+            total += ua.getScore();
+        }
+        return total / history.size();
+    }
+
     public void makeAdmin(User user) {
         try {
             PreparedStatement ps = conn.prepareStatement("update users set is_admin = true where id = ?");

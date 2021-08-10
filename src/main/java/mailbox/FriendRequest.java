@@ -10,6 +10,11 @@ public class FriendRequest {
         this.requestId = requestId;
     }
 
+    public FriendRequest(int fromId, int toId) {
+        this.fromId = fromId;
+        this.toId = toId;
+    }
+
     @Override
     public String toString() {
         return "FriendRequest{" +
