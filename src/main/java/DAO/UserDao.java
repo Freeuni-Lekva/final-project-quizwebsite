@@ -30,10 +30,13 @@ public class UserDao {
 
     public void addUser(User user) {
         try {
-            PreparedStatement ps = conn.prepareStatement("insert into users (id, username, hashed_password," +
-                    " is_admin, first_name, last name) values (" + user.getId() + ", " + user.getUsername() + ", "
-                    + user.getPassword() + ", " + user.isAdmin() + ", " + user.getFirstName() + ", " + user.getLastName()
-                    + ");");
+            PreparedStatement ps = conn.prepareStatement("insert into users values (?, ?, ?, ?, ?, ?)");
+            ps.setLong(1, user.getId());
+            ps.setString(2, user.getUsername());
+            ps.setString(3, user.getPassword());
+            ps.setBoolean(4, user.isAdmin());
+            ps.setString(5, user.getFirstName());
+            ps.setString(6, user.getLastName());
             ps.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -42,8 +45,11 @@ public class UserDao {
 
     public void removeUser(User user) {
         try {
-            PreparedStatement ps = conn.prepareStatement("delete from users where id = " + user.getId()
-                    + " and username = " + user.getUsername() + ";");
+//            PreparedStatement ps = conn.prepareStatement("delete from users where id = " + user.getId()
+//                    + " and username = " + user.getUsername() + ";");
+            PreparedStatement ps = conn.prepareStatement("delete from users where id = ? and username = ?");
+            ps.setLong(1, user.getId());
+            ps.setString(2, user.getUsername());
             ps.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -53,7 +59,8 @@ public class UserDao {
     public boolean userExists(String username) {
         ResultSet rs;
         try {
-            PreparedStatement ps = conn.prepareStatement("select * from users where username = " + username);
+            PreparedStatement ps = conn.prepareStatement("select * from users where username = ?");
+            ps.setString(1, username);
             rs = ps.executeQuery();
             if (rs.next()) return true;
             else return false;
@@ -65,8 +72,10 @@ public class UserDao {
     public boolean isPasswordCorrect(String username, String password) {
         ResultSet rs;
         try {
-            PreparedStatement ps = conn.prepareStatement("select * from users where username = " + username +" and" +
-                    "password = " + password);
+            PreparedStatement ps = conn.prepareStatement("select * from users where username = ? and" +
+                    "password = ?");
+            ps.setString(1, username);
+            ps.setString(2, password);
             rs = ps.executeQuery();
             if (rs.next()) return true;
             else return false;
@@ -79,12 +88,14 @@ public class UserDao {
         ResultSet rs;
         List<UserAttempt> ans = new ArrayList<>();
         try {
-            PreparedStatement ps = conn.prepareStatement("select * from quiz_history where user_id = " + user.getId());
+            PreparedStatement ps = conn.prepareStatement("select * from quiz_history where user_id = ?");
+            ps.setLong(1, user.getId());
             rs = ps.executeQuery();
             while (rs.next()) {
                 UserAttempt tmp = new UserAttempt(rs.getInt("id"), rs.getInt("quiz_id"),
-                        rs.getInt("user_id"), rs.getInt("score"), rs.getDate("attempt_time"));
+                        rs.getInt("user_id"), rs.getInt("score"), rs.getTimestamp("attempt_time"));
                 ans.add(tmp);
+
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -94,20 +105,41 @@ public class UserDao {
 
     public void makeAdmin(User user) {
         try {
-            PreparedStatement ps = conn.prepareStatement("update users set is_admin = true where id = " + user.getId());
+            PreparedStatement ps = conn.prepareStatement("update users set is_admin = true where id = ?");
+            ps.setLong(1, user.getId());
             ps.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
 
+    public User getUser(long id) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("select * from users where id = ?");
+        ps.setLong(1, id);
+        ResultSet rs;
+        rs = ps.executeQuery();
+        return new User(rs.getString("username"), rs.getString("password"), rs.getInt("id"),
+                rs.getBoolean("is_admin"), rs.getString("first_name"), rs.getString("last_name"));
+    }
+
     public void changePassword(User user, String hashedPassword) {
         try {
             PreparedStatement ps;
-            if (user.getId() != 0) ps = conn.prepareStatement("update users set password = " + hashedPassword +
-                    " where id = " + user.getId());
-            else if (user.getUsername() != "") ps = conn.prepareStatement("update users set password = " + hashedPassword +
-                    " where username = " + user.getUsername());
+//            if (user.getId() != 0) ps = conn.prepareStatement("update users set password = " + hashedPassword +
+//                    " where id = " + user.getId());
+//            else if (user.getUsername() != "") ps = conn.prepareStatement("update users set password = " + hashedPassword +
+//                    " where username = " + user.getUsername());
+            if (user.getId() != 0) {
+                ps = conn.prepareStatement("update users set password = ? where id = ?");
+                ps.setString(1, hashedPassword);
+                ps.setLong(2, user.getId());
+                ps.executeUpdate();
+            } else if (user.getUsername() != "") {
+                ps = conn.prepareStatement("update users set password = ? where username = ?");
+                ps.setString(1, hashedPassword);
+                ps.setString(2, user.getUsername());
+                ps.executeUpdate();
+            }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

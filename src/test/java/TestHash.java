@@ -8,7 +8,7 @@ import java.security.NoSuchAlgorithmException;
 public class TestHash extends TestCase {
     public void test1() throws NoSuchAlgorithmException {
         String password = "password";
-        Hash hash = new Hash(password);
+        Hash hash = new Hash();
         String ans = "";
         try {
             MessageDigest md = MessageDigest.getInstance("SHA");
@@ -17,7 +17,7 @@ public class TestHash extends TestCase {
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-        assertEquals(ans, hash.hashPassword());
+        assertEquals(ans, hash.hashPassword("password"));
     }
 
     private static String hexToString(byte[] bytes) {

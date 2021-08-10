@@ -9,8 +9,8 @@ import java.util.SortedMap;
 public class TestUser extends TestCase {
 
     public void test1() throws NoSuchAlgorithmException {
-        Hash hash = new Hash("password");
-        String hashedPassword = hash.hashPassword();
+        Hash hash = new Hash();
+        String hashedPassword = hash.hashPassword("password");
         User user = new User("username", hashedPassword, 3, false, "Aleksandre", "Naneishvili");
         assertEquals("username", user.getUsername());
         assertEquals(hashedPassword, user.getPassword());

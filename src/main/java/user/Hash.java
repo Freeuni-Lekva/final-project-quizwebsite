@@ -6,11 +6,6 @@ import java.security.NoSuchAlgorithmException;
 
 public class Hash {
 
-    private String password;
-
-    public Hash(String password) {
-        this.password = password;
-    }
 
     private static String hexToString(byte[] bytes) {
         StringBuffer buff = new StringBuffer();
@@ -23,7 +18,7 @@ public class Hash {
         return buff.toString();
     }
 
-    public String hashPassword() throws NoSuchAlgorithmException {
+    public String hashPassword(String password) throws NoSuchAlgorithmException {
         String ans = "";
         MessageDigest md = MessageDigest.getInstance("SHA");
         md.update(password.getBytes(StandardCharsets.UTF_8));
