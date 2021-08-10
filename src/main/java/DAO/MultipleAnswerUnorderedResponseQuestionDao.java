@@ -22,7 +22,7 @@ public class MultipleAnswerUnorderedResponseQuestionDao implements QuestionDao {
                     ("INSERT  INTO multiple_answer_unordered_questions (question_text, quiz_id, numOfRequestedAnswers)" +
                             "VALUES (?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, q.getQuestionText());
-            statement.setInt(2, (int)quiz_id);
+            statement.setLong(2, quiz_id);
             statement.setInt(3, q.getNumOfRequestedAnswers());
             statement.execute();
 

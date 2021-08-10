@@ -22,7 +22,7 @@ public class StandardUnorderedResponseQuestionDao implements QuestionDao {
                     ("INSERT  INTO standard_unordered_questions(question_text, quiz_id) VALUES (?, ?);",
                             Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, q.getQuestionText());
-            statement.setInt(2, (int)quiz_id);
+            statement.setLong(2, quiz_id);
             statement.execute();
 
             ResultSet rs = statement.getGeneratedKeys();

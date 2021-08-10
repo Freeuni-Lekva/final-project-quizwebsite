@@ -24,7 +24,7 @@ public class PictureUnorderedResponseQuestionDao implements QuestionDao {
                             "VALUES (?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, q.getQuestionText());
             statement.setString(2, q.getPicUrl());
-            statement.setInt(3, (int)quiz_id);
+            statement.setLong(3, quiz_id);
             statement.execute();
 
             ResultSet rs = statement.getGeneratedKeys();

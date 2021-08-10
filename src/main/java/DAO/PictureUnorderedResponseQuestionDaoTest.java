@@ -82,7 +82,7 @@ class PictureUnorderedResponseQuestionDaoTest {
         assertEquals(r, q1.getLegalAnswers());
 
         PictureUnorderedResponseQuestion p1 = (PictureUnorderedResponseQuestion)qs.get(1);
-        assertEquals(p1.getQuestionText(), q1.getQuestionText());
+        assertEquals(p1.getQuestionText(), q2.getQuestionText());
         HashSet<String> r1 = p1.getLegalAnswers();
         assertEquals(r1, q2.getLegalAnswers());
 
