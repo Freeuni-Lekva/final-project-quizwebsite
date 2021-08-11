@@ -54,19 +54,19 @@ class MultipleAnswerUnorderedResponseQuestionDaoTest {
 
         res.last();
         String text = res.getString("question_text");
-        int question_id = res.getInt("id");
+        long question_id = res.getLong("id");
         assertEquals(q1.getQuestionText(), text);
 
 
         HashSet<String> answers = new HashSet<>();
         PreparedStatement st1 = conn.prepareStatement("select * from multiple_answer_unordered_answers where question_id=?;");
-        st1.setInt(1, question_id);
+        st1.setLong(1, question_id);
         ResultSet r = st1.executeQuery();
         while(r.next()){
             answers.add(r.getString("answer_text"));
         }
         assertEquals(q1.getLegalAnswers(), answers);
-        assertEquals(q1.getNumOfRequestedAnswers(), res.getInt("numOfRequestedAnswers"));
+        assertEquals(q1.getNumOfRequestedAnswers(), res.getLong("numOfRequestedAnswers"));
 
         PreparedStatement stat = conn.prepareStatement("delete from multiple_answer_unordered_questions where question_text=?;");
         stat.setString(1, q1.getQuestionText());

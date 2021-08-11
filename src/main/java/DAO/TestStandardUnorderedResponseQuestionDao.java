@@ -53,13 +53,13 @@ public class TestStandardUnorderedResponseQuestionDao {
 
         res.last();
         String text = res.getString("question_text");
-        int question_id = res.getInt("id");
+        long question_id = res.getLong("id");
         assertEquals(q1.getQuestionText(), text );
 
 
         HashSet<String> answers = new HashSet<>();
         PreparedStatement st1 = conn.prepareStatement("select * from standard_unordered_answers where question_id=?;");
-        st1.setInt(1, question_id);
+        st1.setLong(1, question_id);
         ResultSet r = st1.executeQuery();
         while(r.next()){
             answers.add(r.getString("answer_text"));
