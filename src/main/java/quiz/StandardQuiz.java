@@ -7,12 +7,12 @@ import java.util.List;
 import java.util.SortedMap;
 
 public class StandardQuiz extends Quiz{
-    public StandardQuiz(long id, List<Question> questions, User author, String name, SortedMap<Integer, User> history) {
+    public StandardQuiz(long id, List<Question> questions, User author, String name, List<QuizAttempt> history) {
         super(id, questions, author, name, history);
     }
 
-    public StandardQuiz(List<Question> questions, User author, String name) {
-        super(questions, author, name);
+    public StandardQuiz(List<Question> questions, User author, String name, List<QuizAttempt> history) {
+        super(questions, author, name, history);
     }
 
     @Override

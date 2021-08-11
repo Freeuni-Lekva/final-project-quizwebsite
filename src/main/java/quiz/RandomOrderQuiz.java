@@ -10,12 +10,12 @@ import java.util.SortedMap;
 
 public class RandomOrderQuiz extends Quiz{
 
-    public RandomOrderQuiz(long id, List<Question> questions, boolean correctImmediately, User author, String name, SortedMap<Integer, User> history) {
+    public RandomOrderQuiz(long id, List<Question> questions, User author, String name,  List<QuizAttempt> history) {
         super(id, questions, author, name, history);
     }
 
-    public RandomOrderQuiz(List<Question> questions, boolean correctImmediately, User author, String name) {
-        super(questions, author, name);
+    public RandomOrderQuiz(List<Question> questions, User author, String name,  List<QuizAttempt> history) {
+        super(questions, author, name, history);
     }
 
     @Override
