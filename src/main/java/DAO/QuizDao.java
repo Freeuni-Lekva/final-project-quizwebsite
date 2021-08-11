@@ -75,7 +75,7 @@ public class QuizDao {
 
     public List<Quiz> getQuizzes() throws SQLException, ClassNotFoundException {
         List<Quiz> result = new ArrayList<>();
-        PreparedStatement statement = connection.prepareStatement("select * from quizzes");
+        PreparedStatement statement = connection.prepareStatement("select * from quizzes order by id desc");
         ResultSet rs = statement.executeQuery();
         while (rs.next()) {
             result.add(getQuiz(rs.getLong("id")));
