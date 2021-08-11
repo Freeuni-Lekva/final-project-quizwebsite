@@ -26,11 +26,12 @@ public class RandomOrderQuiz extends Quiz{
     private List<Question> shuffle(List<Question> questions) {
         Random random = new Random();
         List<Question> result = new ArrayList<>();
-        while(questions.size() > 0) {
+        while(questions.size() > 1) {
             int index = random.nextInt(questions.size() - 1);
             result.add(questions.get(index));
             questions.remove(index);
         }
+        result.add(questions.get(0));
         return result;
     }
 }

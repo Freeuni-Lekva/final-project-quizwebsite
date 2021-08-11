@@ -22,6 +22,7 @@ public abstract class Quiz {
         this.questions = questions;
         this.author = author;
         this.name = name;
+        this.history = history;
     }
 
     public User getAuthor() {

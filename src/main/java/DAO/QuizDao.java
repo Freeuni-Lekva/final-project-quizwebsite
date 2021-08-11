@@ -41,19 +41,21 @@ public class QuizDao {
     }
 
     public Quiz getQuiz(long quizId) throws SQLException, ClassNotFoundException {
-        User author = null; //TODO
+        UserDao dao = new UserDao(DatabaseConnection.getConnection());
 
         PreparedStatement statement = connection.prepareStatement("select * from quizzes where id = ?");
         statement.setLong(1, quizId);
         ResultSet rs = statement.executeQuery();
         rs.next();
         String quizName = rs.getString("quiz_name");
+        long authorId = rs.getLong("author");
         boolean isRandomOrder = rs.getBoolean("is_random_order");
+        User author = dao.getUser(authorId);
 
         List<Question> questions = getQuestions(quizId);
         List<QuizAttempt> history = getHistory(quizId);
 
-        return (isRandomOrder) ? new RandomOrderQuiz(questions, author, quizName, history) : new StandardQuiz(questions, author, quizName, history);
+        return (isRandomOrder) ? new RandomOrderQuiz(quizId, questions, author, quizName, history) : new StandardQuiz(quizId, questions, author, quizName, history);
     }
 
     public void addAttempt(long quizId, QuizAttempt quizAttempt) throws SQLException {
@@ -69,6 +71,16 @@ public class QuizDao {
         PreparedStatement statement = connection.prepareStatement("delete from quizzes where id = ?");
         statement.setLong(1, quizId);
         statement.executeUpdate();
+    }
+
+    public List<Quiz> getQuizzes() throws SQLException, ClassNotFoundException {
+        List<Quiz> result = new ArrayList<>();
+        PreparedStatement statement = connection.prepareStatement("select * from quizzes");
+        ResultSet rs = statement.executeQuery();
+        while (rs.next()) {
+            result.add(getQuiz(rs.getLong("id")));
+        }
+        return result;
     }
 
     private List<Question> getQuestions(long quizId) throws SQLException, ClassNotFoundException {
