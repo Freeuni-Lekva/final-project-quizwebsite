@@ -1,7 +1,9 @@
 package question;
 
+import DAO.QuestionDao;
 import response.Response;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -21,5 +23,10 @@ public class MultipleAnswerOrderedQuestion extends OrderedResponseQuestion {
             }
         }
         return (double) count / orderOfAnswers.size();
+    }
+
+    @Override
+    public QuestionDao getDao() throws SQLException, ClassNotFoundException {
+        return null;
     }
 }
