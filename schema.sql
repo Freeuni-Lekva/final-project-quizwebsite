@@ -38,6 +38,7 @@ create table quizzes(
 	id int primary key auto_increment,
     author int not null,
     quiz_name varchar(200) not null,
+    is_random_order boolean not null,
     foreign key(author) references users(id) on delete cascade
 );
 
