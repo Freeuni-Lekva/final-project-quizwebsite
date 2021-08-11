@@ -10,9 +10,11 @@ import java.util.List;
 
 public class StandardUnorderedResponseQuestionDao implements QuestionDao {
     private final Connection conn;
+    private final HelperMethods h;
 
     public StandardUnorderedResponseQuestionDao(Connection conn){
         this.conn=conn;
+        h= new HelperMethods(conn);
     }
 
     @Override
@@ -30,7 +32,7 @@ public class StandardUnorderedResponseQuestionDao implements QuestionDao {
             long question_id =rs.getLong(1);
             HashSet<String> answers = q.getLegalAnswers();
             String st = "INSERT  INTO standard_unordered_answers(answer_text, question_id) VALUES (?, ?);";
-            insertAnswers(st, conn, question_id, answers);
+            h.insertAnswers(st, question_id, answers);
     }
 
     @Override
@@ -46,32 +48,12 @@ public class StandardUnorderedResponseQuestionDao implements QuestionDao {
                 String text = res.getString("question_text");
                 long question_id = res.getLong("id");
                 String s="select * from standard_unordered_answers  WHERE question_id = ?;";
-                HashSet<String> legalAnswers = getAnswers(question_id, s, conn);
+                HashSet<String> legalAnswers = h.getAnswers(question_id, s);
                 StandardUnorderedResponseQuestion q = new StandardUnorderedResponseQuestion(text, legalAnswers);
                 result.add(q);
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        return result;
-    }
-    private void insertAnswers(String st, Connection conn, long question_id, HashSet<String> answers) throws SQLException {
-        for(String s : answers){
-            PreparedStatement statement1 = conn.prepareStatement(st);
-            statement1.setString(1, s);
-            statement1.setLong(2, question_id);
-            statement1.execute();
-        }
-    }
-
-
-    private HashSet<String> getAnswers(long question_id, String s, Connection conn) throws SQLException {
-        HashSet<String> result = new HashSet<>();
-        PreparedStatement st = conn.prepareStatement(s);
-        st.setLong(1, question_id);
-        ResultSet res = st.executeQuery();
-        while(res.next()){
-            result.add(res.getString("answer_text"));
         }
         return result;
     }
