@@ -8,7 +8,7 @@ import java.util.SortedMap;
 public class User {
     private String username;
     private String password;
-    private int id;
+    private long id;
     private boolean isAdmin;
     private String firstName;
     private String lastName;
@@ -32,7 +32,7 @@ public class User {
         return password;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

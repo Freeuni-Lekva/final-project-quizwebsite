@@ -11,17 +11,14 @@ public abstract class Quiz {
     private final User author;
     private final String name;
     private long id;
-    SortedMap<Integer, User> history;
+    List<QuizAttempt> history;
 
-    public Quiz(long id, List<Question> questions, User author, String name, SortedMap<Integer, User> history) {
-        this.questions = questions;
-        this.author = author;
-        this.name = name;
+    public Quiz(long id, List<Question> questions, User author, String name, List<QuizAttempt> history) {
+        this(questions, author, name, history);
         this.id = id;
-        this.history = history;
     }
 
-    public Quiz(List<Question> questions, User author, String name) {
+    public Quiz(List<Question> questions, User author, String name, List<QuizAttempt> history) {
         this.questions = questions;
         this.author = author;
         this.name = name;
@@ -38,6 +35,10 @@ public abstract class Quiz {
     public long getId() {
         return id;
     }
+
+    public void setId(long id) { this.id = id; }
+
+    public List<QuizAttempt> getHistory() { return history; }
 
     public abstract List<Question> getQuestions();
 }
