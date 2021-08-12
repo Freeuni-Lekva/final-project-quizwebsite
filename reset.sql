@@ -1,19 +1,19 @@
 use quizwebsite_db;
 
-drop table standard_unordered_answers;
-drop table standard_unordered_questions;
-drop table multiple_choice_unordered_answers;
-drop table multiple_choice_unordered_questions;
-drop table picture_unordered_answers;
-drop table picture_unordered_questions;
-drop table multiple_answer_unordered_answers;
-drop table multiple_answer_unordered_questions;
-drop table quiz_history;
-drop table quizzes;
-drop table friend_requests;
-drop table friendship;
-drop table messages;
-drop table users;
+drop table if exists standard_unordered_answers;
+drop table if exists standard_unordered_questions;
+drop table if exists multiple_choice_unordered_answers;
+drop table if exists multiple_choice_unordered_questions;
+drop table if exists picture_unordered_answers;
+drop table if exists picture_unordered_questions;
+drop table if exists multiple_answer_unordered_answers;
+drop table if exists multiple_answer_unordered_questions;
+drop table if exists quiz_history;
+drop table if exists quizzes;
+drop table if exists friend_requests;
+drop table if exists friendship;
+drop table if exists messages;
+drop table if exists users;
 
 create table users (
                        id int primary key auto_increment,

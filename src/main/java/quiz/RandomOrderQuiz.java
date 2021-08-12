@@ -31,7 +31,7 @@ public class RandomOrderQuiz extends Quiz{
             result.add(questions.get(index));
             questions.remove(index);
         }
-        result.add(questions.get(0));
+        if (!questions.isEmpty()) result.add(questions.get(0));
         return result;
     }
 }
