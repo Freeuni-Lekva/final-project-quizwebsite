@@ -1,32 +1,43 @@
 package mailbox;
 
-
+import java.sql.Timestamp;
 
 public class Message {
-    private int messageId;
-    private int fromId;
-    private int toId;
+    private long messageId;
+    private long fromId;
+    private long toId;
     private String message;
-    public Message(int messageId, int fromId, int toId, String message){
+    private Timestamp sentTime;
+
+    public Message(long messageId, long fromId, long toId, String message, Timestamp sentTime){
         this.messageId = messageId;
         this.fromId = fromId;
         this.toId = toId;
         this.message = message;
+        this.sentTime = sentTime;
     }
 
-    public int getMessageId() {
+    public Message(long fromId, long toId, String message, Timestamp sentTime){
+        this.fromId = fromId;
+        this.toId = toId;
+        this.message = message;
+        this.sentTime = sentTime;
+    }
+
+    public long getMessageId() {
         return messageId;
     }
 
-    public int getFromId(){
+    public long getFromId(){
         return fromId;
     }
-    public int getToId(){
+    public long getToId(){
         return toId;
     }
     public String getMessage(){
         return message;
     }
+    public Timestamp getSentTime() { return sentTime; }
 
     @Override
     public String toString() {

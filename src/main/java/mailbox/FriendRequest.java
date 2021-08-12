@@ -1,13 +1,19 @@
 package mailbox;
 
 public class FriendRequest {
-    private int fromId;
-    private int toId;
-    private int requestId;
-    public FriendRequest(int requestId, int fromId, int toId){
+    private long fromId;
+    private long toId;
+    private long requestId;
+
+    public FriendRequest(long requestId, long fromId, long toId){
         this.fromId = fromId;
         this.toId = toId;
         this.requestId = requestId;
+    }
+
+    public FriendRequest(long fromId, long toId){
+        this.fromId = fromId;
+        this.toId = toId;
     }
 
     @Override
@@ -19,14 +25,13 @@ public class FriendRequest {
                 '}';
     }
 
-    public int getRequestId() {
+    public long getRequestId() {
         return requestId;
     }
-
-    public int getFromId() {
+    public long getFromId() {
         return fromId;
     }
-    public int getToId() {
+    public long getToId() {
         return toId;
     }
 }
