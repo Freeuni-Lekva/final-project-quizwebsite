@@ -1,5 +1,6 @@
-package DAO;
+package dao;
 
+import DAO.PictureUnorderedResponseQuestionDao;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import question.PictureUnorderedResponseQuestion;
