@@ -1,3 +1,5 @@
+package question;
+
 import org.junit.Test;
 import question.MultipleAnswerUnorderedResponseQuestion;
 import question.Question;

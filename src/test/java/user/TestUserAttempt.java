@@ -1,3 +1,5 @@
+package user;
+
 import junit.framework.TestCase;
 import user.UserAttempt;
 
