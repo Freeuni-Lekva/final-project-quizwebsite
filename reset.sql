@@ -15,6 +15,8 @@ drop table if exists friendship;
 drop table if exists messages;
 drop table if exists users;
 
+use quizwebsite_db;
+
 create table users (
                        id int primary key auto_increment,
                        username varchar(50),
@@ -28,7 +30,8 @@ create table messages(
                          id int primary key auto_increment,
                          from_user_id int not null,
                          to_user_id int not null,
-                         message_text varchar(1000) not null,
+                         msg_text varchar(1000) not null,
+                         sent_time timestamp not null,
                          foreign key(from_user_id) references users(id) on delete cascade,
                          foreign key(to_user_id) references users(id) on delete cascade
 );
