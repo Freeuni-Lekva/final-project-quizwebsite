@@ -3,23 +3,20 @@ import user.Hash;
 import user.User;
 
 import java.security.NoSuchAlgorithmException;
-import java.time.LocalDate;
-import java.util.SortedMap;
 
 public class TestUser extends TestCase {
 
     public void test1() throws NoSuchAlgorithmException {
         Hash hash = new Hash("password");
         String hashedPassword = hash.hashPassword();
-        User user = new User("username", hashedPassword, 3, false, "Aleksandre", "Naneishvili");
+        User user = new User(3, "username", hashedPassword, false, "Aleksandre", "Naneishvili");
         assertEquals("username", user.getUsername());
         assertEquals(hashedPassword, user.getPassword());
-        assertEquals("Aleksandre Naneishvili", user.getFullName());
         assertEquals(3, user.getId());
         assertFalse(user.isAdmin());
         assertEquals( "User{" +
                 "username='" + "username" + '\'' +
-                ", password='" + hashedPassword + '\'' +
+                ", hashedPassword='" + hashedPassword + '\'' +
                 ", id=" + 3 +
                 ", isAdmin=" + false +
                 ", firstName='" + "Aleksandre" + '\'' +
