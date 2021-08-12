@@ -35,17 +35,18 @@ public class MultipleChoiceUnorderedResponseQuestionDao implements QuestionDao {
                 PreparedStatement statement1 = conn.prepareStatement
                         ("Insert into multiple_choice_unordered_answers(answer_text, question_id, is_correct) values (?, ?, ?);");
                 statement1.setString(1, s);
-                statement1.setInt(2, question_id);
+                statement1.setLong(2, question_id);
                 statement1.setBoolean(3, legalAnswers.contains(s));
                 statement1.execute();
             }
     }
 
+
     @Override
-    public List<Question> getQuestions(int quizId) throws SQLException {
+    public List<Question> getQuestions(long quizId) throws SQLException {
         List<Question> result = new ArrayList<>();
             PreparedStatement st = conn.prepareStatement("select * from multiple_choice_unordered_questions WHERE  quiz_id = ?;");
-            st.setInt(1, quizId);
+            st.setLong(1, quizId);
             ResultSet res = st.executeQuery();
 
             while (res.next()) {
@@ -60,20 +61,20 @@ public class MultipleChoiceUnorderedResponseQuestionDao implements QuestionDao {
             }
         return result;
     }
-    private void insertAnswers(String st, Connection conn, int question_id, HashSet<String> answers) throws SQLException {
+    private void insertAnswers(String st, Connection conn, long question_id, HashSet<String> answers) throws SQLException {
         for(String s : answers){
             PreparedStatement statement1 = conn.prepareStatement(st);
             statement1.setString(1, s);
-            statement1.setInt(2, question_id);
+            statement1.setLong(2, question_id);
             statement1.execute();
         }
     }
 
 
-    private HashSet<String> getAnswers(int question_id, String s, Connection conn) throws SQLException {
+    private HashSet<String> getAnswers(long question_id, String s, Connection conn) throws SQLException {
         HashSet<String> result = new HashSet<>();
         PreparedStatement st = conn.prepareStatement(s);
-        st.setInt(1, question_id);
+        st.setLong(1, question_id);
         ResultSet res = st.executeQuery();
         while(res.next()){
             result.add(res.getString("answer_text"));

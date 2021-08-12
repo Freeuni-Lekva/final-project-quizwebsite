@@ -1,23 +1,23 @@
 package user;
 
-import quiz.Quiz;
-
-import java.time.LocalDate;
-import java.util.SortedMap;
-
 public class User {
     private String username;
-    private String password;
+    private String hashedPassword;
     private long id;
     private boolean isAdmin;
     private String firstName;
     private String lastName;
 
-    public User(String username, String password, int id, boolean isAdmin, String firstName,
+    public User(long id, String username, String hashedPassword, boolean isAdmin, String firstName,
+                String lastName) {
+        this(username, hashedPassword, isAdmin, firstName, lastName);
+        this.id = id;
+    }
+
+    public User(String username, String hashedPassword, boolean isAdmin, String firstName,
                 String lastName) {
         this.username = username;
-        this.password = password;
-        this.id = id;
+        this.hashedPassword = hashedPassword;
         this.isAdmin = isAdmin;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -29,7 +29,7 @@ public class User {
     }
 
     public String getPassword() {
-        return password;
+        return hashedPassword;
     }
 
     public long getId() {
@@ -40,15 +40,23 @@ public class User {
         return isAdmin;
     }
 
-    public String getFullName() {
-        return firstName + " " + lastName;
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setId(long userId) {
+        this.id = userId;
     }
 
     @Override
     public String toString() {
         return "User{" +
                 "username='" + username + '\'' +
-                ", password='" + password + '\'' +
+                ", hashedPassword='" + hashedPassword + '\'' +
                 ", id=" + id +
                 ", isAdmin=" + isAdmin +
                 ", firstName='" + firstName + '\'' +

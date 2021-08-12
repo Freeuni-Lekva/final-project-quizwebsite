@@ -11,7 +11,7 @@ public abstract class Quiz {
     private final User author;
     private final String name;
     private long id;
-    List<QuizAttempt> history;
+    private List<QuizAttempt> history;
 
     public Quiz(long id, List<Question> questions, User author, String name, List<QuizAttempt> history) {
         this(questions, author, name, history);
@@ -22,6 +22,7 @@ public abstract class Quiz {
         this.questions = questions;
         this.author = author;
         this.name = name;
+        this.history = history;
     }
 
     public User getAuthor() {

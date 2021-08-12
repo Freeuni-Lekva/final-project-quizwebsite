@@ -1,4 +1,19 @@
-create database quizwebsite_db;
+use quizwebsite_db;
+
+drop table if exists standard_unordered_answers;
+drop table if exists standard_unordered_questions;
+drop table if exists multiple_choice_unordered_answers;
+drop table if exists multiple_choice_unordered_questions;
+drop table if exists picture_unordered_answers;
+drop table if exists picture_unordered_questions;
+drop table if exists multiple_answer_unordered_answers;
+drop table if exists multiple_answer_unordered_questions;
+drop table if exists quiz_history;
+drop table if exists quizzes;
+drop table if exists friend_requests;
+drop table if exists friendship;
+drop table if exists messages;
+drop table if exists users;
 
 use quizwebsite_db;
 
@@ -111,63 +126,3 @@ create table multiple_answer_unordered_answers (
                                                    question_id int not null,
                                                    foreign key(question_id) references multiple_answer_unordered_questions(id) on delete cascade
 );
-
-
--- examples --
-/*
-insert into users(username, hashed_password, is_admin) values("test1", "pass", 1);
-insert into quizzes(author, quiz_name) values (1, "Quiz1");
-insert into quizzes(author, quiz_name) values (1, "Quiz2");
-
-insert into standard_unordered_questions(question_text, quiz_id) values ("What is the highest mountain", 1);
-insert into standard_unordered_questions(question_text, quiz_id) values ("What is the deepest lake", 1);
-insert into multiple_choice_unordered_questions(question_text, quiz_id) values ("What is the deepest lake in georgia", 1);
-insert into standard_unordered_answers(answer_text, question_id) values ("everest", 1);
-insert into standard_unordered_answers(answer_text, question_id) values ("baikal", 2);
-insert into multiple_choice_unordered_answers(answer_text, question_id, is_correct) values ("paravani", 1, false);
-insert into multiple_choice_unordered_answers(answer_text, question_id, is_correct) values ("ritsa", 1, true);
-insert into multiple_choice_unordered_answers(answer_text, question_id, is_correct) values ("paliastomi", 1, false);
-
-
-insert into multiple_choice_unordered_questions(question_text, quiz_id) values ("What is the biggest sea", 2);
-insert into multiple_choice_unordered_questions(question_text, quiz_id) values ("What is the biggest city", 2);
-insert into multiple_choice_unordered_answers(answer_text, question_id, is_correct) values ("black sea", 2, false);
-insert into multiple_choice_unordered_answers(answer_text, question_id, is_correct) values ("azov sea", 2, false);
-insert into multiple_choice_unordered_answers(answer_text, question_id, is_correct) values ("philippine Sea", 2, true);
-insert into multiple_choice_unordered_answers(answer_text, question_id, is_correct) values ("tbilisi", 3, false);
-insert into multiple_choice_unordered_answers(answer_text, question_id, is_correct) values ("tokyo", 3, true);
-insert into multiple_choice_unordered_answers(answer_text, question_id, is_correct) values ("riga", 3, false);
-*/
-
--- selects
-/*
-select * from users;
-select * from quizzes;
-select * from quiz_history;
-select * from standard_unordered_questions;
-select * from standard_unordered_answers;
-select * from multiple_choice_unordered_questions;
-select * from multiple_choice_unordered_answers;
-select * from picture_unordered_questions;
-select * from picture_unordered_answers;
-select * from multiple_answer_unordered_questions;
-select * from multiple_answer_unordered_answers;
-*/
-
--- drops
-/*
-drop table standard_unordered_answers;
-drop table standard_unordered_questions;
-drop table multiple_choice_unordered_answers;
-drop table multiple_choice_unordered_questions;
-drop table picture_unordered_answers;
-drop table picture_unordered_questions;
-drop table multiple_answer_unordered_answers;
-drop table multiple_answer_unordered_questions;
-drop table quiz_history;
-drop table quizzes;
-drop table friend_requests;
-drop table friendship;
-drop table messages;
-drop table users;
-*/

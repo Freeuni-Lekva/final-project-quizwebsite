@@ -1,41 +1,47 @@
 package user;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class UserAttempt {
 
-    private int id;
-    private int quizId;
-    private int userId;
-    private int score;
-    private Date date;
+    private long id;
+    private long quizId;
+    private long userId;
+    private double score;
+    private Timestamp timestamp;
 
-    public UserAttempt(int id, int quizId, int userId, int score, Date date) {
+    public UserAttempt(long id, long quizId, long userId, double score, Timestamp timestamp) {
+        this(quizId, userId, score, timestamp);
         this.id = id;
+    }
+
+    public UserAttempt(long quizId, long userId, double score, Timestamp timestamp) {
         this.quizId = quizId;
         this.userId = userId;
         this.score = score;
-        this.date = date;
+        this.timestamp = timestamp;
     }
 
-    public int getId() {
+
+    public long getId() {
         return id;
     }
 
-    public int getQuizId() {
+    public long getQuizId() {
         return quizId;
     }
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public int getScore() {
+    public double getScore() {
         return score;
     }
 
-    public Date getDate() {
-        return date;
+    public Timestamp getTimeStamp() {
+        return timestamp;
     }
 
     @Override
@@ -45,7 +51,7 @@ public class UserAttempt {
                 ", quizId=" + quizId +
                 ", userId=" + userId +
                 ", score=" + score +
-                ", date=" + date +
+                ", timestamp=" + timestamp +
                 '}';
     }
 }

@@ -10,5 +10,5 @@ import java.util.List;
 
 public interface QuestionDao {
     void addQuestion(Question question, long quiz_id) throws SQLException;
-    List<Question> getQuestions(int quizId) throws SQLException;
+    List<Question> getQuestions(long quizId) throws SQLException;
 }
