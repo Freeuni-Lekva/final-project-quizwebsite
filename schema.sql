@@ -16,6 +16,7 @@ create table messages(
     from_user_id int not null,
     to_user_id int not null,
     message_text varchar(1000) not null,
+    sent_time timestamp not null,
     foreign key(from_user_id) references users(id) on delete cascade,
     foreign key(to_user_id) references users(id) on delete cascade 
 );
