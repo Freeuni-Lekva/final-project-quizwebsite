@@ -1,7 +1,11 @@
 package question;
 
+import DAO.MultipleChoiceUnorderedResponseQuestionDao;
+import DAO.QuestionDao;
+import database.DatabaseConnection;
 import response.Response;
 
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Iterator;
 
@@ -24,6 +28,11 @@ public class MultipleChoiceUnorderedResponseQuestion extends UnorderedResponseQu
             if (legalAnswers.contains(iterator.next())) count++;
         }
         return (double) count / legalAnswers.size();
+    }
+
+    @Override
+    public QuestionDao getDao() throws SQLException, ClassNotFoundException {
+        return new MultipleChoiceUnorderedResponseQuestionDao(DatabaseConnection.getConnection());
     }
 
     public HashSet<String> getChoices() {
