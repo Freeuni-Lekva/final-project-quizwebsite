@@ -1,12 +1,14 @@
 package dao;
 
 import DAO.MultipleAnswerUnorderedResponseQuestionDao;
+import database.DatabaseConnection;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import question.MultipleAnswerUnorderedResponseQuestion;
 import question.MultipleChoiceUnorderedResponseQuestion;
 import question.Question;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.HashSet;
 import java.util.List;
@@ -22,10 +24,9 @@ class MultipleAnswerUnorderedResponseQuestionDaoTest {
 
 
     @BeforeAll
-    public static void init() throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/quizwebsite_db", "root1", "Rootroot!123");
-
+    public static void init() throws ClassNotFoundException, SQLException, IOException {
+        conn= DatabaseConnection.getConnection();
+        DatabaseConnection.resetTables();
 
         String  questionText = "which is the highest Mountain?";
         HashSet<String> legalAnswers = new HashSet<>();
@@ -43,6 +44,14 @@ class MultipleAnswerUnorderedResponseQuestionDaoTest {
         q1 = new MultipleAnswerUnorderedResponseQuestion(questionText, legalAnswers, numOfRequestedAnswers);
         q2 = new MultipleAnswerUnorderedResponseQuestion(questionText2, legalAnswers2, numOfRequestedAnswers2);
         qDao = new MultipleAnswerUnorderedResponseQuestionDao(conn);
+        PreparedStatement statement = conn.prepareStatement
+                ("INSERT  INTO users(username, hashed_password, is_admin, first_name, last_name)" +
+                        "VALUES ('bla1', 'bla', false, 'bla', 'bla');");
+        PreparedStatement statement1 = conn.prepareStatement
+                ("INSERT  INTO quizzes (author, quiz_name,  is_random_order)" +
+                        "VALUES (1, 'quiz1', false);");
+        statement.execute();
+        statement1.execute();
     }
 
     @Test
@@ -55,19 +64,19 @@ class MultipleAnswerUnorderedResponseQuestionDaoTest {
 
         res.last();
         String text = res.getString("question_text");
-        int question_id = res.getInt("id");
+        long question_id = res.getLong("id");
         assertEquals(q1.getQuestionText(), text);
 
 
         HashSet<String> answers = new HashSet<>();
         PreparedStatement st1 = conn.prepareStatement("select * from multiple_answer_unordered_answers where question_id=?;");
-        st1.setInt(1, question_id);
+        st1.setLong(1, question_id);
         ResultSet r = st1.executeQuery();
         while(r.next()){
             answers.add(r.getString("answer_text"));
         }
         assertEquals(q1.getLegalAnswers(), answers);
-        assertEquals(q1.getNumOfRequestedAnswers(), res.getInt("numOfRequestedAnswers"));
+        assertEquals(q1.getNumOfRequestedAnswers(), res.getLong("numOfRequestedAnswers"));
 
         PreparedStatement stat = conn.prepareStatement("delete from multiple_answer_unordered_questions where question_text=?;");
         stat.setString(1, q1.getQuestionText());

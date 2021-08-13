@@ -17,8 +17,6 @@ public class PictureUnorderedResponseQuestion extends UnorderedResponseQuestion 
         this.picUrl = picUrl;
     }
 
-
-
     @Override
     public double getScore(Response response) {
         Iterator<String> iterator = response.getAllAnswers();

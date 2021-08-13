@@ -10,9 +10,9 @@ import java.util.HashSet;
 import java.util.Iterator;
 
 public class MultipleAnswerUnorderedResponseQuestion extends UnorderedResponseQuestion {
-    private final int numOfRequestedAnswers;
+    private final long numOfRequestedAnswers;
 
-    public MultipleAnswerUnorderedResponseQuestion(String questionText, HashSet<String> legalAnswers, int numOfRequestedAnswers) {
+    public MultipleAnswerUnorderedResponseQuestion(String questionText, HashSet<String> legalAnswers, long numOfRequestedAnswers) {
         super(questionText, legalAnswers);
         this.numOfRequestedAnswers = numOfRequestedAnswers;
     }
@@ -32,7 +32,7 @@ public class MultipleAnswerUnorderedResponseQuestion extends UnorderedResponseQu
         return new MultipleAnswerUnorderedResponseQuestionDao(DatabaseConnection.getConnection());
     }
 
-    public int getNumOfRequestedAnswers(){
+    public long getNumOfRequestedAnswers(){
         return numOfRequestedAnswers;
     }
 }

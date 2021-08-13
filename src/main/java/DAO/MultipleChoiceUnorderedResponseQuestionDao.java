@@ -10,9 +10,11 @@ import java.util.List;
 
 public class MultipleChoiceUnorderedResponseQuestionDao implements QuestionDao {
     private final Connection conn;
+    private final HelperMethods h;
 
     public MultipleChoiceUnorderedResponseQuestionDao(Connection conn) {
         this.conn = conn;
+        h = new HelperMethods(conn);
     }
 
     @Override
@@ -27,7 +29,7 @@ public class MultipleChoiceUnorderedResponseQuestionDao implements QuestionDao {
 
             ResultSet rs = statement.getGeneratedKeys();
             rs.next();
-            int question_id = rs.getInt(1);
+            long question_id = rs.getLong(1);
 
             HashSet<String> legalAnswers = q.getLegalAnswers();
             HashSet<String> choices = q.getChoices();
@@ -41,7 +43,6 @@ public class MultipleChoiceUnorderedResponseQuestionDao implements QuestionDao {
             }
     }
 
-
     @Override
     public List<Question> getQuestions(long quizId) throws SQLException {
         List<Question> result = new ArrayList<>();
@@ -51,34 +52,15 @@ public class MultipleChoiceUnorderedResponseQuestionDao implements QuestionDao {
 
             while (res.next()) {
                 String text = res.getString("question_text");
-                int question_id = res.getInt("id");
+                long question_id = res.getLong("id");
                 String legalStm = "select * from multiple_choice_unordered_answers  WHERE question_id = ? AND is_correct;";
                 String choicesStm = "select * from  multiple_choice_unordered_answers  WHERE question_id = ?;";
-                HashSet<String> legalAnswers = getAnswers(question_id, legalStm, conn);
-                HashSet<String> choices = getAnswers(question_id, choicesStm, conn);
+                HashSet<String> legalAnswers = h.getAnswers(question_id, legalStm);
+                HashSet<String> choices = h.getAnswers(question_id, choicesStm);
                 MultipleChoiceUnorderedResponseQuestion q = new MultipleChoiceUnorderedResponseQuestion(text, legalAnswers, choices);
                 result.add(q);
             }
         return result;
     }
-    private void insertAnswers(String st, Connection conn, long question_id, HashSet<String> answers) throws SQLException {
-        for(String s : answers){
-            PreparedStatement statement1 = conn.prepareStatement(st);
-            statement1.setString(1, s);
-            statement1.setLong(2, question_id);
-            statement1.execute();
-        }
-    }
 
-
-    private HashSet<String> getAnswers(long question_id, String s, Connection conn) throws SQLException {
-        HashSet<String> result = new HashSet<>();
-        PreparedStatement st = conn.prepareStatement(s);
-        st.setLong(1, question_id);
-        ResultSet res = st.executeQuery();
-        while(res.next()){
-            result.add(res.getString("answer_text"));
-        }
-        return result;
-    }
 }

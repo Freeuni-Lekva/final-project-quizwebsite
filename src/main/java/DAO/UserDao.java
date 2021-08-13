@@ -101,4 +101,12 @@ public class UserDao {
         ps.setTimestamp(4, attempt.getTimeStamp());
         ps.executeUpdate();
     }
+    public User getUser(String username) throws SQLException {
+        PreparedStatement ps = connection.prepareStatement("select * from users where username = ?");
+        ps.setString(1, username);
+        ResultSet rs = ps.executeQuery();
+        rs.next();
+        return new User(rs.getLong("id"), rs.getString("username"), rs.getString("hashed_password"),
+                rs.getBoolean("is_admin"), rs.getString("first_name"), rs.getString("last_name"));
+    }
 }

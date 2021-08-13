@@ -1,3 +1,5 @@
+package dao;
+
 import DAO.QuizDao;
 import DAO.UserDao;
 import database.DatabaseConnection;

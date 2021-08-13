@@ -9,8 +9,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DatabaseConnection {
-    private static final String user = "root";
-    private static final String password = "root";
+    private static final String user = "root1";
+    private static final String password = "Rootroot!123";
     private static final String db_name = "quizwebsite_db";
     public static Connection getConnection() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
