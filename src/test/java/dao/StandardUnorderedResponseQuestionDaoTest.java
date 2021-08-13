@@ -1,6 +1,7 @@
 package dao;
 
 import DAO.StandardUnorderedResponseQuestionDao;
+import database.DatabaseConnection;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -12,21 +13,22 @@ import quiz.StandardQuiz;
 import static org.junit.jupiter.api.Assertions.*;
 
 import javax.enterprise.inject.Stereotype;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-public class TestStandardUnorderedResponseQuestionDao {
+public class StandardUnorderedResponseQuestionDaoTest {
     private static Connection conn;
     private static StandardUnorderedResponseQuestionDao qDao;
     private static StandardUnorderedResponseQuestion q1;
     private static StandardUnorderedResponseQuestion q2 ;
 
     @BeforeAll
-    public static void init() throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/quizwebsite_db", "root1", "Rootroot!123");
+    public static void init() throws ClassNotFoundException, SQLException, IOException {
+        conn= DatabaseConnection.getConnection();
+        DatabaseConnection.resetTables();
 
         qDao = new StandardUnorderedResponseQuestionDao(conn);
 
@@ -43,6 +45,15 @@ public class TestStandardUnorderedResponseQuestionDao {
         legalAnswers2.add("philippine Sea");
 
         q2 = new StandardUnorderedResponseQuestion(questionText2, legalAnswers2);
+
+        PreparedStatement statement = conn.prepareStatement
+                ("INSERT  INTO users(username, hashed_password, is_admin, first_name, last_name)" +
+                        "VALUES ('bla1', 'bla', false, 'bla', 'bla');");
+        PreparedStatement statement1 = conn.prepareStatement
+                ("INSERT  INTO quizzes (author, quiz_name,  is_random_order)" +
+                        "VALUES (1, 'quiz1', false);");
+        statement.execute();
+        statement1.execute();
     }
 
     @Test
@@ -54,13 +65,13 @@ public class TestStandardUnorderedResponseQuestionDao {
 
         res.last();
         String text = res.getString("question_text");
-        int question_id = res.getInt("id");
+        long question_id = res.getLong("id");
         assertEquals(q1.getQuestionText(), text );
 
 
         HashSet<String> answers = new HashSet<>();
         PreparedStatement st1 = conn.prepareStatement("select * from standard_unordered_answers where question_id=?;");
-        st1.setInt(1, question_id);
+        st1.setLong(1, question_id);
         ResultSet r = st1.executeQuery();
         while(r.next()){
             answers.add(r.getString("answer_text"));

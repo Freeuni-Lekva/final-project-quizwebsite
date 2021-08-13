@@ -1,3 +1,5 @@
+package dao;
+
 import DAO.FriendRequestDao;
 import DAO.UserDao;
 import database.DatabaseConnection;
