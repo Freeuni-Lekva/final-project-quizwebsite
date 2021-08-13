@@ -11,12 +11,12 @@ import java.util.List;
 public class PictureUnorderedResponseQuestionDao implements QuestionDao {
 
     private final Connection conn;
-    private final HelperMethods h;
+    private final AnswerDao h;
 
 
     public PictureUnorderedResponseQuestionDao(Connection conn){
         this.conn=conn;
-        this.h = new HelperMethods(conn);
+        this.h = new AnswerDao(conn);
 
     }
 

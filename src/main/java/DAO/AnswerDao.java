@@ -6,10 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
 
-public class HelperMethods {
+public class AnswerDao {
     private final Connection conn;
 
-    public HelperMethods(Connection conn){
+    public AnswerDao(Connection conn){
         this.conn=conn;
     }
 

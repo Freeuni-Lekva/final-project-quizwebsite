@@ -10,11 +10,11 @@ import java.util.List;
 
 public class StandardUnorderedResponseQuestionDao implements QuestionDao {
     private final Connection conn;
-    private final HelperMethods h;
+    private final AnswerDao h;
 
     public StandardUnorderedResponseQuestionDao(Connection conn){
         this.conn=conn;
-        h= new HelperMethods(conn);
+        h= new AnswerDao(conn);
     }
 
     @Override

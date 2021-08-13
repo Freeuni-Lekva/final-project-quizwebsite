@@ -2,7 +2,6 @@ package DAO;
 
 import question.MultipleAnswerUnorderedResponseQuestion;
 import question.Question;
-import DAO.HelperMethods;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,11 +11,11 @@ import java.util.List;
 
 public class MultipleAnswerUnorderedResponseQuestionDao implements QuestionDao {
     private final Connection conn;
-    private final HelperMethods h;
+    private final AnswerDao h;
 
     public MultipleAnswerUnorderedResponseQuestionDao(Connection conn){
         this.conn=conn;
-        this.h = new HelperMethods(conn);
+        this.h = new AnswerDao(conn);
     }
 
     @Override
