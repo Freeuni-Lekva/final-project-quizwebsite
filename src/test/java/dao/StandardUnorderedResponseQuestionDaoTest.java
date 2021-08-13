@@ -26,7 +26,7 @@ public class StandardUnorderedResponseQuestionDaoTest {
     private static StandardUnorderedResponseQuestion q2 ;
 
     @Before
-    public static void init() throws ClassNotFoundException, SQLException, IOException {
+    public void init() throws ClassNotFoundException, SQLException, IOException {
         conn= DatabaseConnection.getConnection();
         DatabaseConnection.resetTables();
 

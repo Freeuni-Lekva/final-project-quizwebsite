@@ -16,7 +16,12 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-class MultipleChoiceUnorderedResponseQuestionDaoTest {
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashSet;
+
+public class MultipleChoiceUnorderedResponseQuestionDaoTest {
     private static Connection conn;
     private static MultipleChoiceUnorderedResponseQuestion q1;
     private static MultipleChoiceUnorderedResponseQuestion q2;
@@ -24,7 +29,7 @@ class MultipleChoiceUnorderedResponseQuestionDaoTest {
 
 
     @Before
-    public static void init() throws ClassNotFoundException, SQLException, IOException {
+    public void init() throws ClassNotFoundException, SQLException, IOException {
         conn= DatabaseConnection.getConnection();
         DatabaseConnection.resetTables();
 

@@ -16,14 +16,14 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-class PictureUnorderedResponseQuestionDaoTest {
+public class PictureUnorderedResponseQuestionDaoTest {
     private static Connection conn;
     private static PictureUnorderedResponseQuestionDao qDao;
     private static PictureUnorderedResponseQuestion q1;
     private static PictureUnorderedResponseQuestion q2;
 
     @Before
-    public static void init() throws ClassNotFoundException, SQLException, IOException {
+    public  void init() throws ClassNotFoundException, SQLException, IOException {
         conn= DatabaseConnection.getConnection();
         DatabaseConnection.resetTables();
 

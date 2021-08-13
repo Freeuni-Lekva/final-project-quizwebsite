@@ -14,7 +14,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-class MultipleAnswerUnorderedResponseQuestionDaoTest {
+public class MultipleAnswerUnorderedResponseQuestionDaoTest {
     private static Connection conn;
     private static MultipleAnswerUnorderedResponseQuestion q1;
     private static MultipleAnswerUnorderedResponseQuestion q2;
@@ -23,7 +23,7 @@ class MultipleAnswerUnorderedResponseQuestionDaoTest {
 
 
     @Before
-    public static void init() throws ClassNotFoundException, SQLException, IOException {
+    public  void init() throws ClassNotFoundException, SQLException, IOException {
         conn= DatabaseConnection.getConnection();
         DatabaseConnection.resetTables();
 
