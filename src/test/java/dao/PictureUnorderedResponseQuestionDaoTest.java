@@ -2,8 +2,8 @@ package dao;
 
 import DAO.PictureUnorderedResponseQuestionDao;
 import database.DatabaseConnection;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 import question.PictureUnorderedResponseQuestion;
 import question.Question;
 import question.StandardUnorderedResponseQuestion;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 
 class PictureUnorderedResponseQuestionDaoTest {
     private static Connection conn;
@@ -22,7 +22,7 @@ class PictureUnorderedResponseQuestionDaoTest {
     private static PictureUnorderedResponseQuestion q1;
     private static PictureUnorderedResponseQuestion q2;
 
-    @BeforeAll
+    @Before
     public static void init() throws ClassNotFoundException, SQLException, IOException {
         conn= DatabaseConnection.getConnection();
         DatabaseConnection.resetTables();

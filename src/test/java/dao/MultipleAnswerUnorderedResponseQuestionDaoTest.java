@@ -2,10 +2,9 @@ package dao;
 
 import DAO.MultipleAnswerUnorderedResponseQuestionDao;
 import database.DatabaseConnection;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 import question.MultipleAnswerUnorderedResponseQuestion;
-import question.MultipleChoiceUnorderedResponseQuestion;
 import question.Question;
 
 import java.io.IOException;
@@ -13,7 +12,7 @@ import java.sql.*;
 import java.util.HashSet;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 
 class MultipleAnswerUnorderedResponseQuestionDaoTest {
     private static Connection conn;
@@ -23,7 +22,7 @@ class MultipleAnswerUnorderedResponseQuestionDaoTest {
 
 
 
-    @BeforeAll
+    @Before
     public static void init() throws ClassNotFoundException, SQLException, IOException {
         conn= DatabaseConnection.getConnection();
         DatabaseConnection.resetTables();

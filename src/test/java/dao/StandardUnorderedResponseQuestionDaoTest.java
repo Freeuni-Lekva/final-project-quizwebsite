@@ -3,14 +3,14 @@ package dao;
 import DAO.StandardUnorderedResponseQuestionDao;
 import database.DatabaseConnection;
 import org.apache.commons.dbcp2.BasicDataSource;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 import question.Question;
 import question.StandardUnorderedResponseQuestion;
 import quiz.Quiz;
 import quiz.StandardQuiz;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 
 import javax.enterprise.inject.Stereotype;
 import java.io.IOException;
@@ -25,7 +25,7 @@ public class StandardUnorderedResponseQuestionDaoTest {
     private static StandardUnorderedResponseQuestion q1;
     private static StandardUnorderedResponseQuestion q2 ;
 
-    @BeforeAll
+    @Before
     public static void init() throws ClassNotFoundException, SQLException, IOException {
         conn= DatabaseConnection.getConnection();
         DatabaseConnection.resetTables();
