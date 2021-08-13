@@ -1,10 +1,8 @@
 package question;
 
-import DAO.MultipleAnswerUnorderedResponseQuestionDao;
 import DAO.QuestionDao;
-import database.DatabaseConnection;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 import response.MultipleOrderedAnswerResponse;
 import response.Response;
 
@@ -16,11 +14,12 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 
 public class TestMultipleAnswerUnorderedResponseQuestion {
-    private static MultipleAnswerUnorderedResponseQuestion question;
+    private MultipleAnswerUnorderedResponseQuestion question;
+    HashSet<String> legalAnswers;
 
-    @BeforeAll
-    public static void init(){
-        HashSet<String> legalAnswers = new HashSet<>();
+    @Before
+    public void init(){
+        legalAnswers = new HashSet<>();
         legalAnswers.add("ans1");
         legalAnswers.add("ans2");
         legalAnswers.add("ans3");
@@ -38,5 +37,11 @@ public class TestMultipleAnswerUnorderedResponseQuestion {
     public void testGetNumOfRequestedAnswers() throws SQLException, ClassNotFoundException {
         assertEquals(2, question.getNumOfRequestedAnswers());
         QuestionDao dao = question.getDao();
+    }
+
+    @Test
+    public void testGetQuestion() {
+        assertEquals("test", question.getQuestionText());
+        assertEquals(legalAnswers, question.getLegalAnswers());
     }
 }

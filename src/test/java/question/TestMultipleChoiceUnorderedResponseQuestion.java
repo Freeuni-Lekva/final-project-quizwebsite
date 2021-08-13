@@ -1,8 +1,8 @@
 package question;
 
 import DAO.QuestionDao;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 import response.MultipleOrderedAnswerResponse;
 import response.Response;
 
@@ -10,15 +10,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+
 import static org.junit.Assert.assertEquals;
 
 public class TestMultipleChoiceUnorderedResponseQuestion {
-    private static MultipleChoiceUnorderedResponseQuestion question;
-    private  static HashSet<String> choices;
+    private MultipleChoiceUnorderedResponseQuestion question;
+    private HashSet<String> choices;
+    HashSet<String> legalAnswers;
 
-    @BeforeAll
-    public static void init(){
-        HashSet<String> legalAnswers = new HashSet<>();
+
+    @Before
+    public void init(){
+        legalAnswers = new HashSet<>();
         legalAnswers.add("ans1");
         legalAnswers.add("ans2");
         legalAnswers.add("ans3");

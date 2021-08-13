@@ -1,23 +1,22 @@
 package question;
 
 import DAO.QuestionDao;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 import response.MultipleUnorderedAnswerResponse;
 import response.Response;
 
 import java.sql.SQLException;
 import java.util.HashSet;
 
-import static org.junit.Assert.assertEquals;
-
 public class TestStandardUnorderedResponseQuestion {
     private static StandardUnorderedResponseQuestion question;
     private static String picUrl = "bla";
+    private HashSet<String> legalAnswers;
 
-    @BeforeAll
-    public static void init(){
+    @Before
+    public void init(){
         HashSet<String> legalAnswers = new HashSet<>();
         legalAnswers.add("ans1");
         legalAnswers.add("ans2");
