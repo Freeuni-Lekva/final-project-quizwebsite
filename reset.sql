@@ -19,11 +19,11 @@ use quizwebsite_db;
 
 create table users (
                        id int primary key auto_increment,
-                       username varchar(50),
-                       hashed_password varchar(200),
-                       is_admin boolean,
-                       first_name varchar(30),
-                       last_name varchar(30)
+                       username varchar(50) unique not null ,
+                       hashed_password varchar(200) not null,
+                       is_admin boolean not null,
+                       first_name varchar(30) not null,
+                       last_name varchar(30) not null
 );
 
 create table messages(
