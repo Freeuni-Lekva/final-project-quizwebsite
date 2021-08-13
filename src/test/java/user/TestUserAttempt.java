@@ -19,7 +19,7 @@ public class TestUserAttempt extends TestCase {
                 "id=" + 2 +
                 ", quizId=" + 4 +
                 ", userId=" + 5 +
-                ", score=" + 95 +
+                ", score=" + 95.0 +
                 ", timestamp=" + timestamp +
                 '}');
     }

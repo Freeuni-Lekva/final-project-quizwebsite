@@ -1,3 +1,5 @@
+package dao;
+
 import DAO.MessageDao;
 import DAO.UserDao;
 import database.DatabaseConnection;

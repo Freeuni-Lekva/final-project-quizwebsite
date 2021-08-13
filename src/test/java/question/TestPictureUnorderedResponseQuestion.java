@@ -3,7 +3,6 @@ package question;
 import DAO.QuestionDao;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
 import response.MultipleUnorderedAnswerResponse;
 import response.Response;
 
@@ -31,7 +30,7 @@ public class TestPictureUnorderedResponseQuestion {
         HashSet<String> responseAnswers = new HashSet<>();
         responseAnswers.add("ans1");
         Response response = new MultipleUnorderedAnswerResponse(responseAnswers);
-        Assertions.assertEquals(1, question.getScore(response));
+        assertEquals(1, question.getScore(response), 0.01);
     }
     @Test
     public void testGetPicUrl() throws SQLException, ClassNotFoundException {
