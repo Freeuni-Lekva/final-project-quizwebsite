@@ -18,8 +18,8 @@
                         <h3 class="mb-5">Sign in</h3>
 
                         <form action="LoginServlet" method="post" class="mb-4">
-                            <input type="text" name="username" class="form-control form-control-lg mb-4" placeholder="Username" />
-                            <input type="password" name="password" class="form-control form-control-lg mb-4" placeholder="Password" />
+                            <input required type="text" name="username" class="form-control form-control-lg mb-4" placeholder="Username" />
+                            <input required type="password" name="password" class="form-control form-control-lg mb-4" placeholder="Password" />
                             <input class="btn btn-primary btn-lg btn-block" type="submit" value="Login">
                         </form>
                         <label style="color: red;"><%=text%></label>
