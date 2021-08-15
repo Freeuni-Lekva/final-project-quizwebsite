@@ -1,5 +1,7 @@
 package DAO;
 
+import database.DatabaseConnection;
+import quiz.Quiz;
 import user.User;
 import user.UserAttempt;
 
@@ -110,5 +112,17 @@ public class UserDao {
                     rs.getBoolean("is_admin"), rs.getString("first_name"), rs.getString("last_name"));
         }
         return null;
+    }
+
+    public List<Quiz> getCreatedQuizzes(long userId) throws SQLException, ClassNotFoundException {
+        QuizDao dao = new QuizDao(DatabaseConnection.getConnection());
+        PreparedStatement ps = connection.prepareStatement("select * from quizzes where author = ?");
+        ps.setLong(1, userId);
+        ResultSet rs = ps.executeQuery();
+        List<Quiz> list = new ArrayList<>();
+        while(rs.next()) {
+            list.add(dao.getQuiz(rs.getLong("id")));
+        }
+        return list;
     }
 }

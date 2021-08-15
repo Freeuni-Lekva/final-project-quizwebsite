@@ -29,7 +29,7 @@ public class RegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         UserDao dao = (UserDao) httpServletRequest.getServletContext().getAttribute("UserDao");
         String username = httpServletRequest.getParameter("username");
-        String password = httpServletRequest.getParameter("pass");
+        String password = httpServletRequest.getParameter("password");
         String firstname = httpServletRequest.getParameter("firstname");
         String lastname = httpServletRequest.getParameter("lastname");
 

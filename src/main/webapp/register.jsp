@@ -28,7 +28,7 @@
                     </form>
                     <label style="color: red;"><%=text%></label>
                     <hr class="my-4">
-                    <a href="register.jsp"> Sign in </a>
+                    <a href="login.jsp"> Sign in </a>
                 </div>
             </div>
         </div>
