@@ -1,8 +1,10 @@
 package servlets;
 
 import DAO.UserDao;
+import quiz.Quiz;
 import user.Hash;
 import user.User;
+import user.UserAttempt;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.List;
 
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
@@ -32,14 +35,21 @@ public class LoginServlet extends HttpServlet {
         String password = httpServletRequest.getParameter("password");
         try {
             User user = dao.getUser(username);
-            if (user != null && user.getPassword().equals(new Hash(password).hashPassword())) {
+            List<User> friendList = dao.getFriends(user.getId());
+            List<Quiz> createdQuizzes = dao.getCreatedQuizzes(user.getId());
+            List<UserAttempt> attempts = dao.getAttempts(user.getId());
+            if (user.getPassword().equals(new Hash(password).hashPassword())) {
                 httpServletRequest.getSession().setAttribute("currUser", user);
-                httpServletRequest.getRequestDispatcher("welcome.jsp").forward(httpServletRequest, httpServletResponse);
+                httpServletRequest.setAttribute("user", user);
+                httpServletRequest.setAttribute("friendList", friendList);
+                httpServletRequest.setAttribute("createdQuizzes", createdQuizzes);
+                httpServletRequest.setAttribute("attempts", attempts);
+                httpServletRequest.getRequestDispatcher("user.jsp").forward(httpServletRequest, httpServletResponse);
             } else {
                 httpServletRequest.setAttribute("text", "Username or password is incorrect, try again.");
                 httpServletRequest.getRequestDispatcher("login.jsp").forward(httpServletRequest, httpServletResponse);
             }
-        } catch (NoSuchAlgorithmException | SQLException e) {
+        } catch (NoSuchAlgorithmException | SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
