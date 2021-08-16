@@ -18,6 +18,8 @@ if (session.getAttribute("currUser") == null) response.sendRedirect("login.jsp")
 MessageDao dao = (MessageDao) request.getServletContext().getAttribute("MessageDao");
     User currUser = (User)session.getAttribute("currUser");
     User user = (User) request.getAttribute("user");
+    String username = "";
+    username = user.getUsername();
     List<Message> messageList = null;
     try {
         messageList = dao.getConversation(currUser.getId(), user.getId());
