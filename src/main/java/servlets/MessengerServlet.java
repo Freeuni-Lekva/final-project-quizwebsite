@@ -31,6 +31,8 @@ public class MessengerServlet extends HttpServlet {
                 httpServletRequest.getSession().setAttribute("userName2", userName2);
                 List<Message> m =mDao.getConversation(user1.getId(), user2.getId());
                 httpServletRequest.getRequestDispatcher("WEB-INF/messenger.jsp").forward(httpServletRequest, (ServletResponse) httpServletRequest);
+            } else {
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -53,6 +55,7 @@ public class MessengerServlet extends HttpServlet {
             Message mess= new Message(user1.getId(), user2.getId(), text, timestamp);
             mDao.addMessage(mess);
             httpServletRequest.getRequestDispatcher("WEB-INF/messenger.jsp").forward(httpServletRequest, (ServletResponse) httpServletRequest);
+            doGet(httpServletRequest, httpServletResponse);
         } catch (SQLException | ServletException | IOException e) {
             e.printStackTrace();
         }

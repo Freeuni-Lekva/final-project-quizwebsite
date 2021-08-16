@@ -27,7 +27,7 @@
 
     <div class="bottom_wrapper clearfix">
         <form action='search' method='post'>
-                                    <input type='text' placeholder="Type Username to show messages" name="message_input" />
+                                    <input type='text' placeholder="Type message  to send..." name="message_input" />
                                     <input type='submit' value="send message" />
          </form>
     </div>
@@ -43,11 +43,11 @@
             <ul class="messages">
             <form action='search1' method='get'>
                  <c:forEach var="mes" items="${m}">
-                            <c:when test ="${mes.getFromId() == user1.getId()}" %>
+                            <c:when test ="${mes.getFromId() == user1.getId()}" >
                             <li class="message right appeared">
                                     <div class="avatar"></div>
                                     <div class="text_wrapper">
-                                    <div class="text">fads</div>
+                                    <div class="text"> "${mes.getMessage()}"</div>
                                     </div>
                             </li>
                             </c:when>
@@ -55,7 +55,7 @@
                              <li class="message left appeared">
                                     <div class="avatar"></div>
                                     <div class="text_wrapper">
-                                    <div class="text">text</div>
+                                    <div class="text" >"${mes.getMessage()}"</div>
                                     </div>
                              </li>
                              </c:otherwise>
