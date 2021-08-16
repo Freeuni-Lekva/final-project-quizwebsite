@@ -3,6 +3,8 @@
 <%@ page import="quiz.Quiz" %>
 <%@ page import="user.UserAttempt" %>
 <%@ page import="DAO.QuizDao" %>
+<%@ page import="mailbox.FriendRequest" %>
+<%@ page import="DAO.UserDao" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
@@ -14,12 +16,15 @@
 
 <%
     boolean isCurrUserAdmin = false;
+    long currUserId = -1;
     String currUsername = "";
     if(session.getAttribute("currUser") == null)  {
         response.sendRedirect("login.jsp");
+        return;
     } else {
         isCurrUserAdmin = ((User)session.getAttribute("currUser")).isAdmin();
         currUsername = ((User)session.getAttribute("currUser")).getUsername();
+        currUserId = ((User)session.getAttribute("currUser")).getId();
     }
     User user = (User) request.getAttribute("user");
     String username = "";
@@ -43,9 +48,8 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="<%=request.getContextPath()%>/UserServlet?username=<%=username%>">My Profile <span class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link" href="#">Messages</a>
-            <a class="nav-item nav-link" href="#">Friend Requests</a>
+            <a class="nav-item nav-link active" href="<%=request.getContextPath()%>/UserServlet?username=<%=currUsername%>">My Profile <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link" href="<%=request.getContextPath()%>/FriendRequestsServlet?userId=<%=currUserId%>">Friend Requests</a>
             <a class="nav-item nav-link mr-auto" href="<%=request.getContextPath()%>/LogoutServlet">Sign out</a>
 
         </div>
@@ -63,8 +67,11 @@
                             <div class="mt-3">
                                 <h4><%=username%></h4>
                                 <p class="text-secondary mb-1"><%=name%></p>
-                                <button class="btn btn-primary">Add Friend</button>
-                                <a href="<%=request.getContextPath()%>/MessengerServlet?from_user_id=<%=userId%>" class="btn btn-outline-primary">Message</a>
+                                <% if (!currUsername.equals(username)) {%>
+
+                                    <button class="btn btn-primary">Add Friend</button>
+                                    <a href="<%=request.getContextPath()%>/MessengerServlet?from_user_id=<%=userId%>" class="btn btn-outline-primary">Message</a>
+                                <%}%>
                             </div>
                         </div>
                         <hr class="my-4">

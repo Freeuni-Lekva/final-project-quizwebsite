@@ -9,5 +9,4 @@ public interface Question {
     String getQuestionText();
     double getScore(Response response);
     QuestionDao getDao() throws SQLException, ClassNotFoundException;
-    //String getHTML();
 }
