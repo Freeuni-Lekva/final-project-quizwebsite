@@ -64,7 +64,7 @@
                                 <h4><%=username%></h4>
                                 <p class="text-secondary mb-1"><%=name%></p>
                                 <button class="btn btn-primary">Add Friend</button>
-                                <button class="btn btn-outline-primary">Message</button>
+                                <a href="<%=request.getContextPath()%>/MessengerServlet?from_user_id=<%=userId%>" class="btn btn-outline-primary">Message</a>
                             </div>
                         </div>
                         <hr class="my-4">
@@ -123,7 +123,7 @@
                                     Quiz quiz = dao.getQuiz(q.getQuizId());
                                     out.println("<div class='row mb-3'>");
                                     out.println("<div class='col'>");
-                                    out.println("<a class='mb-0' 'QuizServlet?quizId='" + q.getQuizId() + "'>" + quiz.getName() + "</a>");
+                                    out.println("<a class='mb-0'" + "href='QuizServlet?quizId=" + quiz.getId() + "'>" + quiz.getName() + "</a>");
                                     out.println("</div>");
                                     out.println("<div class='col text-secondary'>" + q.getScore() + "</div>");
                                     out.println("<div class='col text-secondary'>" + q.getTimeStamp() + "</div> </div>");
@@ -142,7 +142,7 @@
                                     List<Quiz> quizzes = (List<Quiz>) request.getAttribute("createdQuizzes");
                                     if (quizzes != null) {
                                         for (Quiz q : quizzes) {
-                                            out.println("<div class='col'> <a class='mb-0' href='QuizServlet?quizId='" + q.getId() + "'>" + q.getName() + "</a> </div>");
+                                            out.println("<div class='col'> <a class='mb-0' href='QuizServlet?quizId=" + q.getId() + "'>" + q.getName() + "</a> </div>");
                                         }
                                     }
                                 %>
