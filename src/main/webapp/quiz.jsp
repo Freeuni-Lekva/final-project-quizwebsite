@@ -22,6 +22,7 @@
         response.sendRedirect("login.jsp");
         return;
     }
+    boolean isCurrUserAdmin = currUser.isAdmin();
     Quiz quiz = (Quiz) request.getAttribute("quiz");
     String quizName = "";
     if (quiz == null) {
@@ -60,8 +61,20 @@
                                 <h4><%=quizName%></h4>
                                 <a href="<%=request.getContextPath()%>/UserServlet?username=<%=user.getUsername()%>" class="text-secondary mb-1"><%=user.getUsername()%></a>
                             </div>
+                            <input name="startAttempt" value="Start Attempt" type="submit" class="btn btn-success">
                         </div>
                         <hr class="my-4">
+
+                        <%if (isCurrUserAdmin) {%>
+                        <div class="d-flex flex-column align-items-center text-center">
+                            <div class="mt-3">
+                                <form action="AdminServlet" method="post">
+                                    <input type="hidden" name="quizId" value="<%=quiz.getId()%>">
+                                    <input name="deleteQuiz" value="Delete Quiz" type="submit" class="btn btn-danger">
+                                </form>
+                            </div>
+                        </div>
+                        <%}%>
 
                     </div>
                 </div>
