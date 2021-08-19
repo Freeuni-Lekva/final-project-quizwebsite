@@ -17,7 +17,9 @@ public class StandardUnorderedResponseQuestion extends UnorderedResponseQuestion
     @Override
     public double getScore(Response response) {
         Iterator<String> iterator = response.getAllAnswers();
-        if (legalAnswers.contains(iterator.next())) return 1;
+        while (iterator.hasNext()) {
+            if (legalAnswers.contains(iterator.next())) return 1;
+        }
         return 0;
     }
 
