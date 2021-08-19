@@ -16,7 +16,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet("/LoginServlet")
+@WebServlet(name = "/LoginServlet", urlPatterns = "/login")
 public class LoginServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
@@ -25,7 +25,7 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
-        super.doGet(httpServletRequest, httpServletResponse);
+        httpServletResponse.sendRedirect("login.jsp");
     }
 
     @Override

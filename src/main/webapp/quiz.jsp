@@ -60,17 +60,12 @@
                             <img src="https://cdn.iconscout.com/icon/free/png-256/user-1648810-1401302.png" class="rounded-circle p-1 bg-primary" width="110">
                             <div class="mt-3">
                                 <h4><%=quizName%></h4>
-                                <a href="<%=request.getContextPath()%>/UserServlet?username=<%=user.getUsername()%>" class="text-secondary mb-1"><%=user.getUsername()%></a>
+                                <a href="<%=request.getContextPath()%>/UserServlet?username=<%=user.getUsername()%>" class="text-secondary mb-1">By: <%=user.getUsername()%></a>
+                                <br>max score: <%=quiz.getQuestions().size()%>
                             </div>
-                            <form action="QuizServlet" method = 'post'>
+                            <form action="QuizTakeServlet" method = 'get'>
                                 <input type="hidden" name="quizId" value=<%=quiz.getId()%>>
-                                <input type="checkbox"  name="correction" value="correction">
-                                <label for="correction"> immediate correction </label><br>
-                                <input name="startAttempt" value="Start Attempt Multiple Pages" type="submit" class="btn btn-success">
-                            </form>
-                            <form action="QuizTakeOnSinglePageServlet" method = 'get'>
-                                <input type="hidden" name="quizId" value=<%=quiz.getId()%>>
-                                <input name="startAttempt" value="Start Attempt On Single Page" type="submit" class="btn btn-success">
+                                <input name="startAttempt" value="Start Attempt" type="submit" class="btn btn-success">
                             </form>
 
                         </div>
