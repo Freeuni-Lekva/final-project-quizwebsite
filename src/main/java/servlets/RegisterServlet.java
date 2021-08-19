@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
-@WebServlet("/RegisterServlet")
+@WebServlet(name = "/RegisterServlet", urlPatterns = "/register")
 public class RegisterServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
@@ -22,7 +22,7 @@ public class RegisterServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
-        super.doGet(httpServletRequest, httpServletResponse);
+        httpServletResponse.sendRedirect("register.jsp");
     }
 
     @Override

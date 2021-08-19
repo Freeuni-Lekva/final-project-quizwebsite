@@ -1,6 +1,7 @@
 package DAO;
 
 import question.MultipleAnswerUnorderedResponseQuestion;
+import question.MultipleChoiceUnorderedResponseQuestion;
 import question.Question;
 
 import java.sql.*;
@@ -43,6 +44,13 @@ public class MultipleAnswerUnorderedResponseQuestionDao implements QuestionDao {
     @Override
     public List<Question> getQuestions(long  quizId) throws SQLException {
         List<Question> result = new ArrayList<>();
+        List <MultipleAnswerUnorderedResponseQuestion> result1 =getQuestionsMultipleAnsUnordered(quizId);
+        result.addAll(result1);
+        return result;
+    }
+
+    public List<MultipleAnswerUnorderedResponseQuestion> getQuestionsMultipleAnsUnordered(long  quizId) throws SQLException {
+        List<MultipleAnswerUnorderedResponseQuestion> result = new ArrayList<>();
         PreparedStatement st = conn.prepareStatement("select * from multiple_answer_unordered_questions WHERE  quiz_id = ?;" );
         st.setLong(1, quizId);
         ResultSet res = st.executeQuery();
@@ -58,7 +66,6 @@ public class MultipleAnswerUnorderedResponseQuestionDao implements QuestionDao {
 
         return result;
     }
-
 
 
 }

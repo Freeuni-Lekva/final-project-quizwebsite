@@ -2,7 +2,8 @@
 <%@ page import="user.User" %>
 <%@ page import="quiz.QuizAttempt" %>
 <%@ page import="java.util.List" %>
-<%@ page import="DAO.UserDao" %><%--
+<%@ page import="DAO.UserDao" %>
+<%--
   Created by IntelliJ IDEA.
   User: zghul
   Date: 8/16/2021
@@ -58,11 +59,17 @@
                             <img src="https://cdn.iconscout.com/icon/free/png-256/user-1648810-1401302.png" class="rounded-circle p-1 bg-primary" width="110">
                             <div class="mt-3">
                                 <h4><%=quizName%></h4>
-                                <a href="<%=request.getContextPath()%>/UserServlet?username=<%=user.getUsername()%>" class="text-secondary mb-1"><%=user.getUsername()%></a>
+                                <a href="<%=request.getContextPath()%>/UserServlet?username=<%=user.getUsername()%>" class="text-secondary mb-1">By: <%=user.getUsername()%></a>
+                                <br>max score: <%=quiz.getQuestions().size()%>
                             </div>
-                            <input name="startAttempt" value="Start Attempt" type="submit" class="btn btn-success">
+                            <form action="QuizTakeServlet" method = 'get'>
+                                <input type="hidden" name="quizId" value=<%=quiz.getId()%>>
+                                <input name="startAttempt" value="Start Attempt" type="submit" class="btn btn-success">
+                            </form>
+
                         </div>
                         <hr class="my-4">
+
 
                         <%if (isCurrUserAdmin) {%>
                         <div class="d-flex flex-column align-items-center text-center">

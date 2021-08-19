@@ -51,7 +51,6 @@
             <a class="nav-item nav-link active" href="<%=request.getContextPath()%>/UserServlet?username=<%=currUsername%>">My Profile <span class="sr-only">(current)</span></a>
             <a class="nav-item nav-link" href="<%=request.getContextPath()%>/FriendRequestsServlet?userId=<%=currUserId%>">Friend Requests</a>
             <a class="nav-item nav-link mr-auto" href="<%=request.getContextPath()%>/LogoutServlet">Sign out</a>
-
         </div>
     </div>
 </nav>

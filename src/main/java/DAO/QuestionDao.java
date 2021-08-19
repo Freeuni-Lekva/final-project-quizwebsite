@@ -1,11 +1,9 @@
 package DAO;
 
+import question.MultipleChoiceUnorderedResponseQuestion;
 import question.Question;
-import quiz.Quiz;
 
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.HashSet;
 import java.util.List;
 
 public interface QuestionDao {
