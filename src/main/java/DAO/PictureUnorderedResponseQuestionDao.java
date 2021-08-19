@@ -1,5 +1,6 @@
 package DAO;
 
+import question.MultipleChoiceUnorderedResponseQuestion;
 import question.PictureUnorderedResponseQuestion;
 import question.Question;
 
@@ -40,22 +41,29 @@ public class PictureUnorderedResponseQuestionDao implements QuestionDao {
             h.insertAnswers(st, question_id, answers);
     }
 
-    @Override
+
     public List<Question> getQuestions(long quizId) throws SQLException {
         List<Question> result = new ArrayList<>();
-            PreparedStatement st = conn.prepareStatement("select * from picture_unordered_questions WHERE  quiz_id = ?;" );
-            st.setLong(1, quizId);
-            ResultSet res = st.executeQuery();
+        List<PictureUnorderedResponseQuestion> result1 = getQuestionsPictureUnordered(quizId);
+        result.addAll(result1);
+        return result;
+    }
 
-            while(res.next()){
-                String text = res.getString("question_text");
-                long question_id = res.getLong("id");
-                String s = "select * from picture_unordered_answers WHERE question_id = ?;";
-                HashSet<String> legalAnswers = h.getAnswers(question_id, s);
-                String img_url = res.getString("img_url");
-                PictureUnorderedResponseQuestion q = new PictureUnorderedResponseQuestion(text, legalAnswers, img_url);
-                result.add(q);
-            }
+    public List<PictureUnorderedResponseQuestion> getQuestionsPictureUnordered(long quizId) throws SQLException {
+        List<PictureUnorderedResponseQuestion> result = new ArrayList<>();
+        PreparedStatement st = conn.prepareStatement("select * from picture_unordered_questions WHERE  quiz_id = ?;" );
+        st.setLong(1, quizId);
+        ResultSet res = st.executeQuery();
+
+        while(res.next()){
+            String text = res.getString("question_text");
+            long question_id = res.getLong("id");
+            String s = "select * from picture_unordered_answers WHERE question_id = ?;";
+            HashSet<String> legalAnswers = h.getAnswers(question_id, s);
+            String img_url = res.getString("img_url");
+            PictureUnorderedResponseQuestion q = new PictureUnorderedResponseQuestion(text, legalAnswers, img_url);
+            result.add(q);
+        }
         return result;
     }
 

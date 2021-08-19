@@ -14,9 +14,7 @@
             <div class="col-12 col-md-8 col-lg-6 col-xl-5">
                 <div class="card shadow-2-strong" style="border-radius: 1rem;">
                     <div class="card-body p-5 text-center">
-
                         <h3 class="mb-5">Sign in</h3>
-
                         <form action="LoginServlet" method="post" class="mb-4">
                             <input required type="text" name="username" class="form-control form-control-lg mb-4" placeholder="Username" />
                             <input required type="password" name="password" class="form-control form-control-lg mb-4" placeholder="Password" />

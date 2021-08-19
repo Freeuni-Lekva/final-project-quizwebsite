@@ -21,6 +21,7 @@ public class PictureUnorderedResponseQuestion extends UnorderedResponseQuestion 
     public double getScore(Response response) {
         Iterator<String> iterator = response.getAllAnswers();
         if (legalAnswers.contains(iterator.next())) return 1;
+
         return 0;
     }
 

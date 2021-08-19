@@ -1,5 +1,6 @@
 package DAO;
 
+import question.MultipleChoiceUnorderedResponseQuestion;
 import question.Question;
 import question.StandardUnorderedResponseQuestion;
 
@@ -38,6 +39,13 @@ public class StandardUnorderedResponseQuestionDao implements QuestionDao {
     @Override
     public List<Question> getQuestions(long quizId) {
         List<Question> result = new ArrayList<>();
+        List<StandardUnorderedResponseQuestion> result1 = getQuestionsStandardUnordered(quizId);
+        result.addAll(result1);
+        return result;
+    }
+
+    public List<StandardUnorderedResponseQuestion> getQuestionsStandardUnordered(long quizId) {
+        List<StandardUnorderedResponseQuestion> result = new ArrayList<>();
 
         try {
             PreparedStatement st = conn.prepareStatement("select * from standard_unordered_questions WHERE  quiz_id = ?;" );

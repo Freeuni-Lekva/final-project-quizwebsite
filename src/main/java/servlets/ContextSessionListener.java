@@ -1,9 +1,6 @@
 package servlets;
 
-import DAO.FriendRequestDao;
-import DAO.MessageDao;
-import DAO.QuizDao;
-import DAO.UserDao;
+import DAO.*;
 import database.DatabaseConnection;
 import mailbox.FriendRequest;
 
@@ -22,14 +19,18 @@ public class ContextSessionListener implements ServletContextListener, HttpSessi
         QuizDao quizDao = null;
         MessageDao messageDao = null;
         FriendRequestDao friendRequestDao = null;
+
         try {
             userDao = new UserDao(DatabaseConnection.getConnection());
             quizDao = new QuizDao(DatabaseConnection.getConnection());
             messageDao = new MessageDao(DatabaseConnection.getConnection());
             friendRequestDao = new FriendRequestDao(DatabaseConnection.getConnection());
+
+
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
+        servletContextEvent.getServletContext().setAttribute("index", 0);
         servletContextEvent.getServletContext().setAttribute("UserDao", userDao);
         servletContextEvent.getServletContext().setAttribute("QuizDao", quizDao);
         servletContextEvent.getServletContext().setAttribute("MessageDao", messageDao);

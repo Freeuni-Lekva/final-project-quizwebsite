@@ -45,21 +45,28 @@ public class MultipleChoiceUnorderedResponseQuestionDao implements QuestionDao {
 
     @Override
     public List<Question> getQuestions(long quizId) throws SQLException {
-        List<Question> result = new ArrayList<>();
-            PreparedStatement st = conn.prepareStatement("select * from multiple_choice_unordered_questions WHERE  quiz_id = ?;");
-            st.setLong(1, quizId);
-            ResultSet res = st.executeQuery();
+        List<MultipleChoiceUnorderedResponseQuestion> result1 = getQuestionsWithChoices(quizId);
+        List<Question> result= new ArrayList<Question>();
+        result.addAll(result1);
+        return result;
+    }
 
-            while (res.next()) {
-                String text = res.getString("question_text");
-                long question_id = res.getLong("id");
-                String legalStm = "select * from multiple_choice_unordered_answers  WHERE question_id = ? AND is_correct;";
-                String choicesStm = "select * from  multiple_choice_unordered_answers  WHERE question_id = ?;";
-                HashSet<String> legalAnswers = h.getAnswers(question_id, legalStm);
-                HashSet<String> choices = h.getAnswers(question_id, choicesStm);
-                MultipleChoiceUnorderedResponseQuestion q = new MultipleChoiceUnorderedResponseQuestion(text, legalAnswers, choices);
-                result.add(q);
-            }
+    public List<MultipleChoiceUnorderedResponseQuestion> getQuestionsWithChoices(long quizId) throws SQLException {
+        List<MultipleChoiceUnorderedResponseQuestion> result = new ArrayList<>();
+        PreparedStatement st = conn.prepareStatement("select * from multiple_choice_unordered_questions WHERE  quiz_id = ?;");
+        st.setLong(1, quizId);
+        ResultSet res = st.executeQuery();
+
+        while (res.next()) {
+            String text = res.getString("question_text");
+            long question_id = res.getLong("id");
+            String legalStm = "select * from multiple_choice_unordered_answers  WHERE question_id = ? AND is_correct;";
+            String choicesStm = "select * from  multiple_choice_unordered_answers  WHERE question_id = ?;";
+            HashSet<String> legalAnswers = h.getAnswers(question_id, legalStm);
+            HashSet<String> choices = h.getAnswers(question_id, choicesStm);
+            MultipleChoiceUnorderedResponseQuestion q = new MultipleChoiceUnorderedResponseQuestion(text, legalAnswers, choices);
+            result.add(q);
+        }
         return result;
     }
 

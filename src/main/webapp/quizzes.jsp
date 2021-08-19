@@ -37,7 +37,6 @@
             <a class="nav-item nav-link" href="#">Messages</a>
             <a class="nav-item nav-link" href="#">Friend Requests</a>
             <a class="nav-item nav-link mr-auto" href="<%=request.getContextPath()%>/LogoutServlet">Sign out</a>
-
         </div>
     </div>
 </nav>

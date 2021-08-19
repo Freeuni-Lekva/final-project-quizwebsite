@@ -2,7 +2,8 @@
 <%@ page import="user.User" %>
 <%@ page import="quiz.QuizAttempt" %>
 <%@ page import="java.util.List" %>
-<%@ page import="DAO.UserDao" %><%--
+<%@ page import="DAO.UserDao" %>
+<%--
   Created by IntelliJ IDEA.
   User: zghul
   Date: 8/16/2021
@@ -61,9 +62,20 @@
                                 <h4><%=quizName%></h4>
                                 <a href="<%=request.getContextPath()%>/UserServlet?username=<%=user.getUsername()%>" class="text-secondary mb-1"><%=user.getUsername()%></a>
                             </div>
-                            <input name="startAttempt" value="Start Attempt" type="submit" class="btn btn-success">
+                            <form action="QuizServlet" method = 'post'>
+                                <input type="hidden" name="quizId" value=<%=quiz.getId()%>>
+                                <input type="checkbox"  name="correction" value="correction">
+                                <label for="correction"> immediate correction </label><br>
+                                <input name="startAttempt" value="Start Attempt Multiple Pages" type="submit" class="btn btn-success">
+                            </form>
+                            <form action="QuizTakeOnSinglePageServlet" method = 'get'>
+                                <input type="hidden" name="quizId" value=<%=quiz.getId()%>>
+                                <input name="startAttempt" value="Start Attempt On Single Page" type="submit" class="btn btn-success">
+                            </form>
+
                         </div>
                         <hr class="my-4">
+
 
                         <%if (isCurrUserAdmin) {%>
                         <div class="d-flex flex-column align-items-center text-center">
