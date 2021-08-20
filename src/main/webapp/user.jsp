@@ -97,8 +97,7 @@
                                                <%System.out.println(friendList);%>
                                         <%if (friendReqs1.contains(currUser)) {%>
                                         <label>Friend Request Sent</label>
-                                        <%}%>
-                                        <%if (!friendList.contains(currUser)) {%>
+                                        <%} else if (!friendList.contains(currUser)) {%>
                                         <input type="submit" name="sendReq" class="btn btn-primary" value="Add Friend">
                                         <%}%>
                                         <% if (friendReqs.contains(user)) {%>
