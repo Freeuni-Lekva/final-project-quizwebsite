@@ -97,12 +97,12 @@
                                                <%System.out.println(friendList);%>
                                         <%if (friendReqs1.contains(currUser)) {%>
                                         <label>Friend Request Sent</label>
+                                        <%} else if (friendReqs.contains(user)) {%>
+                                        <input type="submit" name="respondReq" class="btn btn-primary" value="Respond Request">
                                         <%} else if (!friendList.contains(currUser)) {%>
                                         <input type="submit" name="sendReq" class="btn btn-primary" value="Add Friend">
                                         <%}%>
-                                        <% if (friendReqs.contains(user)) {%>
-                                        <input type="submit" name="respondReq" class="btn btn-primary" value="Respond Request">
-                                        <%}%>
+
 
                                     </form>
                                 <a href="<%=request.getContextPath()%>/MessengerServlet?from_user_id=<%=userId%>" class="btn btn-outline-primary">Message</a>

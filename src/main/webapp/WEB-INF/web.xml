@@ -6,4 +6,12 @@
     <welcome-file-list>
         <welcome-file>quizzes.jsp</welcome-file>
     </welcome-file-list>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/images/404.png</location>
+    </error-page>
+    <error-page>
+        <error-code>405</error-code>
+        <location>/images/404.png</location>
+    </error-page>
 </web-app>
