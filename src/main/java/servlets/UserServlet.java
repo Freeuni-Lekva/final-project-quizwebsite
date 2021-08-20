@@ -1,8 +1,10 @@
 package servlets;
 
+import DAO.FriendRequestDao;
 import DAO.QuizDao;
 import DAO.UserDao;
 import database.DatabaseConnection;
+import mailbox.FriendRequest;
 import quiz.Quiz;
 import user.User;
 import user.UserAttempt;
@@ -59,6 +61,19 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
-        super.doPost(httpServletRequest, httpServletResponse);
+        FriendRequestDao dao = (FriendRequestDao) httpServletRequest.getServletContext().getAttribute("FriendRequestDao");
+        long userId = Long.parseLong(httpServletRequest.getParameter("userId"));
+        String username = httpServletRequest.getParameter("username");
+        User currUser = (User)httpServletRequest.getSession().getAttribute("currUser");
+        if (httpServletRequest.getParameter("sendReq") != null) {
+            try {
+                dao.addFriendRequest(new FriendRequest(currUser.getId(), userId));
+                httpServletResponse.sendRedirect("myProfile.jsp");
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        } else if (httpServletRequest.getParameter("respondReq") != null) {
+            httpServletResponse.sendRedirect("/UserServlet?username=" + username);
+        }
     }
 }

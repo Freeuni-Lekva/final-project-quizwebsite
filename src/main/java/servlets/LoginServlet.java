@@ -16,7 +16,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet(name = "/LoginServlet", urlPatterns = "/login")
+@WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
@@ -44,7 +44,7 @@ public class LoginServlet extends HttpServlet {
                 httpServletRequest.setAttribute("friendList", friendList);
                 httpServletRequest.setAttribute("createdQuizzes", createdQuizzes);
                 httpServletRequest.setAttribute("attempts", attempts);
-                httpServletRequest.getRequestDispatcher("user.jsp").forward(httpServletRequest, httpServletResponse);
+                httpServletRequest.getRequestDispatcher("myProfile.jsp").forward(httpServletRequest, httpServletResponse);
             } else {
                 httpServletRequest.setAttribute("text", "Username or password is incorrect, try again.");
                 httpServletRequest.getRequestDispatcher("login.jsp").forward(httpServletRequest, httpServletResponse);

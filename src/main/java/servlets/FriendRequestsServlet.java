@@ -51,7 +51,7 @@ public class FriendRequestsServlet extends HttpServlet {
         try {
             if (httpServletRequest.getParameter("accept") != null) {
                 uDao.addFriend(user.getId(), id);
-
+                uDao.addFriend(id, user.getId());
             }
             friendRequestDao.removeFriendRequest(new FriendRequest(id, user.getId()));
         } catch (SQLException throwables) {
