@@ -19,7 +19,8 @@ public class questionTypesServlet extends HttpServlet {
         int curr =  (int)httpServletRequest.getSession().getAttribute("currQuestions");
         curr ++;
         httpServletRequest.getSession().setAttribute("currQuestions", curr);
-        String type = httpServletRequest.getParameter("type")+".jsp";
-        httpServletRequest.getRequestDispatcher(type).forward(httpServletRequest, httpServletResponse);
+        String type = httpServletRequest.getParameter("type");
+        httpServletRequest.getSession().setAttribute("type", type);
+        httpServletRequest.getRequestDispatcher("Question.jsp").forward(httpServletRequest, httpServletResponse);
     }
 }

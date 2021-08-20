@@ -12,7 +12,7 @@
                 <div class="card shadow-2-strong" style="border-radius: 1rem;">
                     <div class="card-body p-5 text-center">
                     <%String type = request.getAttribute("type") + "Servlet";%>
-                    <form action=<%=type%> method="post" class="mb-4">
+                    <form action="QuestionServlet" method="post" class="mb-4">
                     <%int n = (Integer)request.getAttribute("nLegalAnswers");
                            for(int i=0; i<n; i++){%>
                              <input required type="text" name="answer" class="form-control form-control-lg mb-4" placeholder="Enter Answer" />
