@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
-@WebServlet(name = "/RegisterServlet", urlPatterns = "/register")
+@WebServlet("/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {

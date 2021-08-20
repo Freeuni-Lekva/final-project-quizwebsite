@@ -93,10 +93,12 @@
                                 <p class="text-secondary mb-1"><%=name%></p>
                                     <form action="UserServlet" method="post">
                                         <input type="hidden" name="userId" value="<%=userId%>">
-                                        <input type="hidden" name="username" value="<%=username%>"
+                                        <input type="hidden" name="username" value="<%=username%>">
+                                               <%System.out.println(friendList);%>
                                         <%if (friendReqs1.contains(currUser)) {%>
                                         <label>Friend Request Sent</label>
-                                        <%} else if (!friendList.contains(currUser)) {%>
+                                        <%}%>
+                                        <%if (!friendList.contains(currUser)) {%>
                                         <input type="submit" name="sendReq" class="btn btn-primary" value="Add Friend">
                                         <%}%>
                                         <% if (friendReqs.contains(user)) {%>

@@ -23,7 +23,7 @@
         response.sendRedirect("login.jsp");
         return;
     } else {
-        currName = ((User)session.getAttribute("currUser")).getFirstName() + " " + ((User)session.getAttribute("currUser")).getFirstName();
+        currName = ((User)session.getAttribute("currUser")).getFirstName() + " " + ((User)session.getAttribute("currUser")).getLastName();
         isCurrUserAdmin = ((User)session.getAttribute("currUser")).isAdmin();
         currUsername = ((User)session.getAttribute("currUser")).getUsername();
         currUserId = ((User)session.getAttribute("currUser")).getId();
@@ -39,6 +39,7 @@
         <div class="navbar-nav">
             <a class="nav-item nav-link active" href="<%=request.getContextPath()%>/UserServlet?username=<%=currUsername%>">My Profile <span class="sr-only">(current)</span></a>
             <a class="nav-item nav-link" href="<%=request.getContextPath()%>/FriendRequestsServlet?userId=<%=currUserId%>">Friend Requests</a>
+            <a class="nav-item nav-link" href="<%=request.getContextPath()%>/addQuizServlet?userId=<%=currUserId%>">Create Quiz</a>
             <a class="nav-item nav-link mr-auto" href="<%=request.getContextPath()%>/LogoutServlet">Sign out</a>
         </div>
     </div>

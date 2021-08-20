@@ -10,7 +10,9 @@
     <title>animated chat window - Bootdey.com</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+    <script src=
+                    "http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+    </script>
 </head>
 <body>
     <%
@@ -53,7 +55,7 @@ MessageDao dao = (MessageDao) request.getServletContext().getAttribute("MessageD
             <div class="message_input_wrapper">
                 <input name="msg_text" type="text" class="message_input" placeholder="Type your message here...">
                 <input name="from_user_id" type="hidden" value="<%=currUser.getId()%>">
-                <input name="to_user_id" type="hidden" value="<%=user.getId()%>">
+                <input id="to_user_id" name="to_user_id" type="hidden" value="<%=user.getId()%>">
             </div>
             <input type="submit" class="send_message" value="Send">
         </form>
