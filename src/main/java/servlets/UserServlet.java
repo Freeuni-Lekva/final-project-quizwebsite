@@ -68,12 +68,12 @@ public class UserServlet extends HttpServlet {
         if (httpServletRequest.getParameter("sendReq") != null) {
             try {
                 dao.addFriendRequest(new FriendRequest(currUser.getId(), userId));
-                httpServletResponse.sendRedirect("myProfile.jsp");
+                httpServletResponse.sendRedirect("/UserServlet?username=" + username);
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
         } else if (httpServletRequest.getParameter("respondReq") != null) {
-            httpServletResponse.sendRedirect("/UserServlet?username=" + username);
+            httpServletResponse.sendRedirect("/FriendRequestsServlet?userId=" + userId);
         }
     }
 }
