@@ -93,7 +93,6 @@
                                     <form action="UserServlet" method="post">
                                         <input type="hidden" name="userId" value="<%=userId%>">
                                         <input type="hidden" name="username" value="<%=username%>"
-                                        <%System.out.println(friendReqs);%>
                                         <%if (friendReqs1.contains(currUser)) {%>
                                         <label>Friend Request Sent</label>
                                         <%} else if (!friendList.contains(currUser)) {%>
