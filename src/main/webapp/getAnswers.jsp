@@ -11,8 +11,12 @@
             <div class="col-12 col-md-8 col-lg-6 col-xl-5">
                 <div class="card shadow-2-strong" style="border-radius: 1rem;">
                     <div class="card-body p-5 text-center">
-                    <%String type = request.getAttribute("type") + "Servlet";%>
+                    <%String type = (String)request.getAttribute("type");%>
+                    <%if(type.equals("MultipleChoiceUnorderedResponseQuestion")){%>
+                                 <label class='card-text' > Enter Incorrect Options </label>
+                    <%}%>
                     <form action="QuestionServlet" method="post" class="mb-4">
+
                     <%int n = (Integer)request.getAttribute("nLegalAnswers");
                            for(int i=0; i<n; i++){%>
                              <input required type="text" name="answer" class="form-control form-control-lg mb-4" placeholder="Enter Answer" />

@@ -31,6 +31,7 @@
     }
     quizName = quiz.getName();
     User user = quiz.getAuthor();
+    int currUserId = (int)currUser.getId();
 %>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-top:0; margin-bottom : 1.5%">
@@ -42,6 +43,7 @@
         <div class="navbar-nav">
             <a class="nav-item nav-link active" href="<%=request.getContextPath()%>/UserServlet?username=<%=currUser.getUsername()%>">My Profile <span class="sr-only">(current)</span></a>
             <a class="nav-item nav-link" href="<%=request.getContextPath()%>/FriendRequestsServlet?userId=<%=currUser.getId()%>">Friend Requests</a>
+            <a class="nav-item nav-link" href="<%=request.getContextPath()%>/addQuizServlet?userId=<%=currUserId%>">Create Quiz</a>
             <a class="nav-item nav-link mr-auto" href="<%=request.getContextPath()%>/LogoutServlet">Sign out</a>
 
         </div>

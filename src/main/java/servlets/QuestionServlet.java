@@ -53,7 +53,7 @@ public class QuestionServlet extends HttpServlet {
                         rightAns = (String) httpServletRequest.getSession().getAttribute("rightAnswer");
                         HashSet<String> ch = new HashSet<>();
                                   ch.add(rightAns);
-
+                        answers.add(rightAns);
                         MultipleChoiceUnorderedResponseQuestion q1= new MultipleChoiceUnorderedResponseQuestion(text,  ch, answers);
                         questions.add(q1);
                         break;
@@ -73,7 +73,7 @@ public class QuestionServlet extends HttpServlet {
                 addQuiz(httpServletRequest, httpServletResponse);
                 httpServletRequest.setAttribute("user", user);
                 httpServletRequest.getSession().setAttribute("questions", null);
-                httpServletRequest.getRequestDispatcher("user.jsp").forward(httpServletRequest, httpServletResponse);
+                httpServletResponse.sendRedirect( "/UserServlet?username=" +user.getUsername());
             } else {
                 httpServletRequest.getRequestDispatcher("questionTypes.jsp").forward(httpServletRequest, httpServletResponse);
             }
@@ -90,7 +90,7 @@ public class QuestionServlet extends HttpServlet {
                 rightAns = httpServletRequest.getParameter("rightAnswer");
                 nChoices = (int) Long.parseLong(httpServletRequest.getParameter("nChoices"));
                 httpServletRequest.getSession().setAttribute("nChoices", nChoices);
-                httpServletRequest.setAttribute("nLegalAnswers", nChoices);
+                httpServletRequest.setAttribute("nLegalAnswers", nChoices-1);
                 httpServletRequest.getSession().setAttribute("rightAnswer", rightAns);
             } else {
                 nLegalAnswers = (int) Long.parseLong(httpServletRequest.getParameter("nLegalAnswers"));
@@ -99,8 +99,6 @@ public class QuestionServlet extends HttpServlet {
             httpServletRequest.setAttribute("type", type);
             text = httpServletRequest.getParameter("qText");
             httpServletRequest.getSession().setAttribute("qText", text);
-
-
             httpServletRequest.getRequestDispatcher("getAnswers.jsp").forward(httpServletRequest, httpServletResponse);
         }
     }

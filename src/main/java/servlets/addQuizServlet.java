@@ -40,8 +40,6 @@ public class addQuizServlet extends HttpServlet {
         httpServletRequest.getSession().setAttribute("nQuestions", nQuestions);
         httpServletRequest.getSession().setAttribute("currQuestions", 0);
         httpServletRequest.getSession().setAttribute("isRandom", isRandom);
-        System.out.println(quizName);
-        System.out.println(nQuestions);
         httpServletRequest.getRequestDispatcher("questionTypes.jsp").forward(httpServletRequest, httpServletResponse);
     }
 }
