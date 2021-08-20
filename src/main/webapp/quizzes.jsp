@@ -37,6 +37,7 @@
         <div class="navbar-nav">
             <a class="nav-item nav-link active" href="<%=request.getContextPath()%>/UserServlet?username=<%=username%>">My Profile <span class="sr-only">(current)</span></a>
             <a class="nav-item nav-link" href="<%=request.getContextPath()%>/FriendRequestsServlet?userId=<%=currUserId%>">Friend Requests</a>
+            <a class="nav-item nav-link" href="<%=request.getContextPath()%>/addQuizServlet?userId=<%=currUserId%>">Create Quiz</a>
             <a class="nav-item nav-link mr-auto" href="<%=request.getContextPath()%>/LogoutServlet">Sign out</a>
         </div>
     </div>
@@ -62,7 +63,26 @@
             out.println("</div> </div>");
         }
         counter++;
+
+        if(counter==quizzes.size()){
+                if (counter % 3 == 0) {
+                  out.println("<div class='container'>");
+                  out.println("<div class='row'>");
+                  }
+                  out.println("<div class='col-lg-4 mb-4'>");
+                  out.println("<div class='card'>");
+                  out.println("<img src='images/quiz.jpg' class='card-img-top'>");
+                  out.println("<div class='card-body'>");
+                  out.println("<h5 class='card-title'>"  + "</h5>");
+                  out.println("<a href='" + request.getContextPath() + "/addQuizServlet" +
+                          "?quizId=" + "' class='btn btn-outline-success btn-sm'>Create New</a> </div> </div> </div>");
+            if (counter % 3 == 2) {
+                 out.println("</div> </div>");
+            }
+        }
+
     }
+
 %>
 
 </body>
