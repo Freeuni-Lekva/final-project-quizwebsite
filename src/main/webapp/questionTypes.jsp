@@ -12,7 +12,8 @@
                 <div class="card shadow-2-strong" style="border-radius: 1rem;">
                     <div class="card-body p-5 text-center">
                     <form action="questionTypesServlet" method="post" class="mb-4">
-                               <select  name="type">
+                        <h3>Select type of question</h3>
+                               <select  name="type" style="margin: 3%">
                                    <option value="MultipleAnswerUnorderedResponseQuestion" >Multiple Answer Unordered Response Question</option>
                                    <option value="MultipleChoiceUnorderedResponseQuestion" >Multiple Choice Unordered Response Question</option>
                                    <option value="PictureUnorderedResponseQuestion" >Picture Unordered Response Question</option>

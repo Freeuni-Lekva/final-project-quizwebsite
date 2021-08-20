@@ -72,6 +72,7 @@ public class QuestionServlet extends HttpServlet {
             if(curr==n){
                 addQuiz(httpServletRequest, httpServletResponse);
                 httpServletRequest.setAttribute("user", user);
+                httpServletRequest.getSession().setAttribute("questions", null);
                 httpServletRequest.getRequestDispatcher("user.jsp").forward(httpServletRequest, httpServletResponse);
             } else {
                 httpServletRequest.getRequestDispatcher("questionTypes.jsp").forward(httpServletRequest, httpServletResponse);
